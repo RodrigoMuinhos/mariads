@@ -2,7 +2,7 @@
 
 Projeto do site com:
 
-- **Frontend** em React + Vite (`/src`)
+- **Frontend** em React + Vite (`/frontend/src`)
 - **Backend** em Spring Boot (`/backend`)
 - **Banco** PostgreSQL (Neon)
 - **Upload real de imagens** via API (`POST /api/images`)
@@ -11,8 +11,9 @@ Projeto do site com:
 
 ## Como rodar o frontend
 
-1. Instale as dependências: `npm i`
-2. Inicie o servidor: `npm run dev`
+1. Entre na pasta `frontend`.
+2. Instale as dependências: `npm i`
+3. Inicie o servidor: `npm run dev`
 
 Frontend padrão: `http://localhost:5173`
 
@@ -34,7 +35,7 @@ Health check:
 
 ## Variáveis de ambiente
 
-### Frontend (`/.env`)
+### Frontend (`/frontend/.env`)
 
 - `VITE_API_BASE_URL=http://localhost:8080`
 

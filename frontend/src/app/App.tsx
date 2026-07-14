@@ -105,6 +105,51 @@ const T = {
     cookie_essential: "Apenas essenciais",
     privacy_title: "Política de Privacidade",
     privacy_close: "Fechar",
+    menu_aria: "Menu",
+    uploading: "Enviando...",
+    replace_image: "Substituir imagem",
+    toolbar_aria: "Formatação de texto",
+    toolbar_bold: "Negrito",
+    toolbar_italic: "Itálico",
+    toolbar_align_left: "Alinhar à esquerda",
+    toolbar_align_center: "Alinhar ao centro",
+    toolbar_align_right: "Alinhar à direita",
+    toolbar_decrease: "Diminuir",
+    toolbar_increase: "Aumentar",
+    toolbar_f8_exit: "F8 para sair",
+    upload_success: "Imagem enviada com sucesso",
+    upload_error: "Não foi possível enviar a imagem",
+    press_f8_more: "Pressione F8 mais",
+    to_enter_edit_mode: "para entrar no modo edição",
+    sec_links: "Links",
+    sec_location: "Localização",
+    sec_schedule: "Atendimento",
+    country: "Brasil",
+    contact_heading: "Contato",
+    portfolio_heading: "Estilos",
+    scale_heading: "Grande Escala",
+    process_heading: "Como solicitar",
+    process_heading_line2: "seu orçamento",
+    clients_heading: "Experiências",
+    add_generic: "Adicionar",
+    budget_short: "Orçamento",
+    add_style_plain: "Adicionar estilo",
+    add_gallery_image: "Adicionar imagem à galeria",
+    add_step_plain: "Adicionar passo",
+    remove_step: "Remover passo",
+    add_question: "Adicionar pergunta",
+    new_question: "Nova pergunta?",
+    new_answer: "Resposta aqui.",
+    ask_another_question: "Tenho outra dúvida",
+    add_period: "Adicionar período",
+    default_period: "Período",
+    default_care_instruction: "Instrução de cuidado.",
+    add_testimonial_plain: "Adicionar depoimento",
+    manage_cookies: "Gerenciar cookies",
+    edit_mode_active: "Modo de edição ativo",
+    post: "Post",
+    wa_prefill:
+      "Olá, vim pelo site e gostaria de solicitar um orçamento para uma tatuagem.",
   },
   en: {
     nav_cta: "Request a quote",
@@ -175,6 +220,51 @@ const T = {
     cookie_essential: "Essential only",
     privacy_title: "Privacy Policy",
     privacy_close: "Close",
+    menu_aria: "Menu",
+    uploading: "Uploading...",
+    replace_image: "Replace image",
+    toolbar_aria: "Text formatting",
+    toolbar_bold: "Bold",
+    toolbar_italic: "Italic",
+    toolbar_align_left: "Align left",
+    toolbar_align_center: "Align center",
+    toolbar_align_right: "Align right",
+    toolbar_decrease: "Decrease",
+    toolbar_increase: "Increase",
+    toolbar_f8_exit: "F8 to exit",
+    upload_success: "Image uploaded successfully",
+    upload_error: "Could not upload the image",
+    press_f8_more: "Press F8",
+    to_enter_edit_mode: "more times to enter edit mode",
+    sec_links: "Links",
+    sec_location: "Location",
+    sec_schedule: "Schedule",
+    country: "Brazil",
+    contact_heading: "Contact",
+    portfolio_heading: "Styles",
+    scale_heading: "Large Scale",
+    process_heading: "How to request",
+    process_heading_line2: "your quote",
+    clients_heading: "Experiences",
+    add_generic: "Add",
+    budget_short: "Quote",
+    add_style_plain: "Add style",
+    add_gallery_image: "Add image to gallery",
+    add_step_plain: "Add step",
+    remove_step: "Remove step",
+    add_question: "Add question",
+    new_question: "New question?",
+    new_answer: "Answer here.",
+    ask_another_question: "Ask another question",
+    add_period: "Add period",
+    default_period: "Period",
+    default_care_instruction: "Care instruction.",
+    add_testimonial_plain: "Add testimonial",
+    manage_cookies: "Manage cookies",
+    edit_mode_active: "Edit mode active",
+    post: "Post",
+    wa_prefill:
+      "Hi! I came from the website and would like to request a tattoo quote.",
   },
 } as const;
 
@@ -301,6 +391,7 @@ const API_BASE = (
   import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8080"
 ).replace(/\/$/, "");
 const DEFAULT_WA_NUMBER = "5585996327634";
+const DEFAULT_INSTAGRAM_URL = "https://www.instagram.com/isismarianatattoo";
 
 function normalizeWaNumber(raw: string): string {
   const digits = (raw ?? "").replace(/\D/g, "");
@@ -309,6 +400,24 @@ function normalizeWaNumber(raw: string): string {
   if (digits.startsWith("55")) return digits;
   if (digits.length === 10 || digits.length === 11) return `55${digits}`;
   return digits;
+}
+
+function normalizeInstagramUrl(raw: string): string {
+  const value = (raw ?? "").trim();
+  if (!value) return DEFAULT_INSTAGRAM_URL;
+
+  if (value.startsWith("@")) {
+    return `https://www.instagram.com/${value.slice(1)}`;
+  }
+
+  const withProtocol = /^https?:\/\//i.test(value) ? value : `https://${value}`;
+  const normalized = withProtocol.replace(/\/+$/, "");
+
+  if (/^https?:\/\/(www\.)?instagram\.com$/i.test(normalized)) {
+    return DEFAULT_INSTAGRAM_URL;
+  }
+
+  return normalized;
 }
 
 async function uploadImageToBackend(
@@ -343,7 +452,7 @@ async function uploadImageToBackend(
 
 const DEFAULT: SiteContent = {
   waNumber: DEFAULT_WA_NUMBER,
-  instagram: "https://instagram.com",
+  instagram: DEFAULT_INSTAGRAM_URL,
   textStyles: {},
   stats: [
     { id: "st1", value: "10+", label: "anos de carreira" },
@@ -667,10 +776,206 @@ const DEFAULT: SiteContent = {
   },
 };
 
+const DEFAULT_EN: SiteContent = {
+  ...DEFAULT,
+  stats: [
+    { ...DEFAULT.stats[0], label: "years of experience" },
+    { ...DEFAULT.stats[1], label: "projects completed" },
+    { ...DEFAULT.stats[2], label: "states served" },
+    { ...DEFAULT.stats[3], label: "styles mastered" },
+  ],
+  faq: [
+    {
+      ...DEFAULT.faq[0],
+      q: "How does the quote process work?",
+      a: "You contact me via WhatsApp and send your references and project details. Then you receive a personalized quote within 48 hours.",
+    },
+    {
+      ...DEFAULT.faq[1],
+      q: "How far in advance should I book?",
+      a: "I recommend booking at least 2 to 4 weeks in advance. Larger projects may require more planning time.",
+    },
+    {
+      ...DEFAULT.faq[2],
+      q: "Does tattooing hurt a lot?",
+      a: "The sensation varies by body area and each person's pain threshold. I work with breaks and techniques to make the session more comfortable.",
+    },
+    {
+      ...DEFAULT.faq[3],
+      q: "Do you do cover-ups?",
+      a: "Yes, I do cover-up projects after evaluating the existing tattoo. Send a photo for analysis.",
+    },
+    {
+      ...DEFAULT.faq[4],
+      q: "How is pricing calculated?",
+      a: "Pricing is based on size, design complexity, body placement, and the number of required sessions.",
+    },
+    {
+      ...DEFAULT.faq[5],
+      q: "Can I pay in installments?",
+      a: "Yes, we offer multiple payment options. Contact us to learn more.",
+    },
+  ],
+  aftercare: [
+    {
+      ...DEFAULT.aftercare[0],
+      day: "Day 1–2",
+      text: "Keep the bandage on for 2 to 4 hours. Gently wash with water and mild soap. Do not scrub.",
+    },
+    {
+      ...DEFAULT.aftercare[1],
+      day: "Day 3–7",
+      text: "Apply fragrance-free moisturizer 2 to 3 times a day. Avoid direct sun exposure and do not soak in pools or the sea.",
+    },
+    {
+      ...DEFAULT.aftercare[2],
+      day: "Day 7–14",
+      text: "Your skin may start peeling. Do not pick at it. Keep moisturizing and avoid clothing that rubs the area.",
+    },
+    {
+      ...DEFAULT.aftercare[3],
+      day: "Day 15–30",
+      text: "The tattoo will be externally healed. Protect it with sunscreen (SPF 50+) whenever exposed to sunlight.",
+    },
+  ],
+  hero: {
+    ...DEFAULT.hero,
+    badge: "Tattoo Artist · Fortaleza, CE",
+    subtitle: "Authorial tattoos in Fortaleza",
+    specialty: "Specialist in blackwork, ornamental, and large-scale projects.",
+    ctaLabel: "Request a quote",
+  },
+  about: {
+    headline:
+      "With over 10 years of experience, Ísis Mariana creates original projects that combine technique, composition, and visual identity.",
+    body: "Based in Fortaleza and also working in other states through guest spots and events, her work is focused on clients seeking personalized, long-lasting projects.",
+    ctaLabel: "Talk on WhatsApp",
+  },
+  styles: DEFAULT.styles.map((style, i) => ({
+    ...style,
+    name: i === 4 ? "Black and Gray" : i === 5 ? "Neo-Traditional" : style.name,
+    desc:
+      [
+        "Contrast, composition, and presence.",
+        "Inspired by decorative patterns, symmetry, and flow.",
+        "Bold lines, movement, and identity.",
+        "Precision, balance, and contrast.",
+        "Depth, texture, and subtlety.",
+        "Bold colors and personality.",
+        "Flow, movement, and organic compositions.",
+        "Pop culture references translated into tattoo language.",
+      ][i] ?? style.desc,
+  })),
+  scale: {
+    ...DEFAULT.scale,
+    title: "Large-Scale",
+    titleItalic: "Projects",
+    body: "Arms, backs, legs, and full compositions designed to follow anatomy and tell a story through tattooing.",
+    ctaLabel: "I want to develop my project",
+    images: DEFAULT.scale.images.map((img, i) => ({
+      ...img,
+      alt:
+        [
+          "Back tattoo",
+          "Full back piece",
+          "Blackwork composition",
+          "Ornamental project",
+        ][i] ?? img.alt,
+    })),
+  },
+  process: {
+    ...DEFAULT.process,
+    steps: [
+      {
+        ...DEFAULT.process.steps[0],
+        title: "Send references",
+        desc: "Share images, ideas, and visual references for the project you want to create.",
+      },
+      {
+        ...DEFAULT.process.steps[1],
+        title: "Inform body placement",
+        desc: "Indicate where the tattoo will be placed for better composition planning.",
+      },
+      {
+        ...DEFAULT.process.steps[2],
+        title: "Inform approximate size",
+        desc: "Describe the estimated dimensions so the quote can be precise and personalized.",
+      },
+      {
+        ...DEFAULT.process.steps[3],
+        title: "Receive your quote",
+        desc: "You will receive a detailed and personalized quote for your project.",
+      },
+      {
+        ...DEFAULT.process.steps[4],
+        title: "Book with deposit",
+        desc: "After approval, your session is confirmed with a deposit payment.",
+      },
+    ],
+    ctaLabel: "Request a quote now",
+  },
+  testimonials: [
+    {
+      ...DEFAULT.testimonials[0],
+      text: "Flawless work, careful service, and a result beyond expectations.",
+    },
+    {
+      ...DEFAULT.testimonials[1],
+      text: "The project was done with great attention to detail. The tattoo turned out exactly how I imagined.",
+    },
+    {
+      ...DEFAULT.testimonials[2],
+      text: "Beyond technique, the composition fit my body perfectly.",
+    },
+  ],
+  cta: {
+    title: "Let's create",
+    titleItalic: "your next project?",
+    body: "Get in touch and request your personalized quote.",
+    ctaLabel: "Chat on WhatsApp",
+  },
+  flashCards: DEFAULT.flashCards.map((item, i) => ({
+    ...item,
+    description:
+      [
+        "Geometric blackwork — arm",
+        "Ornamental mandala — rib",
+        "Full leg tribal",
+        "Blackwork dragon — forearm",
+        "Black and gray portrait",
+        "Neo-traditional floral",
+        "Suminagashi — back",
+        "Anime — original character",
+        "Blackwork angel — back",
+        "Full back closure",
+      ][i] ?? item.description,
+    price: item.price.toLowerCase().includes("consult")
+      ? "On request"
+      : item.price,
+  })),
+  instagramPosts: DEFAULT.instagramPosts.map((post, i) => ({
+    ...post,
+    alt: `Instagram post ${i + 1}`,
+  })),
+  footer: {
+    tagline:
+      "Authorial tattoos, blackwork, ornamental, and large-scale projects.",
+  },
+};
+
+const DEFAULTS: Record<Lang, SiteContent> = {
+  pt: DEFAULT,
+  en: DEFAULT_EN,
+};
+
 // ─── Storage ──────────────────────────────────────────────────────────────────
 
 const STORAGE_KEY = "isis_site_v2";
 const PLACEHOLDER_UPLOAD_IMAGE = "/placeholder-upload.svg";
+
+function storageKeyFor(lang: Lang): string {
+  return `${STORAGE_KEY}_${lang}`;
+}
 
 function sanitizeImageUrl(url: string): string {
   if (!url) return PLACEHOLDER_UPLOAD_IMAGE;
@@ -703,32 +1008,307 @@ function sanitizeContentImages(content: SiteContent): SiteContent {
   };
 }
 
-function loadContent(): SiteContent {
+type StoredSiteContent = Partial<SiteContent> & { _lang?: Lang };
+
+function mergeWithDefaults(
+  defaults: SiteContent,
+  parsed: StoredSiteContent,
+): SiteContent {
+  return {
+    ...defaults,
+    ...parsed,
+    waNumber: normalizeWaNumber(parsed.waNumber ?? DEFAULT_WA_NUMBER),
+    instagram: normalizeInstagramUrl(parsed.instagram ?? DEFAULT_INSTAGRAM_URL),
+    textStyles: parsed.textStyles ?? {},
+    instagramPosts: parsed.instagramPosts ?? defaults.instagramPosts,
+    flashCards: parsed.flashCards ?? defaults.flashCards,
+    stats: parsed.stats ?? defaults.stats,
+    faq: parsed.faq ?? defaults.faq,
+    aftercare: parsed.aftercare ?? defaults.aftercare,
+  };
+}
+
+function mergeSharedFromOtherLanguage(
+  defaults: SiteContent,
+  parsed: StoredSiteContent,
+): SiteContent {
+  return {
+    ...defaults,
+    waNumber: normalizeWaNumber(parsed.waNumber ?? DEFAULT_WA_NUMBER),
+    instagram: normalizeInstagramUrl(parsed.instagram ?? DEFAULT_INSTAGRAM_URL),
+    textStyles: parsed.textStyles ?? {},
+    hero: {
+      ...defaults.hero,
+      image: parsed.hero?.image ?? defaults.hero.image,
+    },
+    styles: defaults.styles.map((style, i) => ({
+      ...style,
+      image: parsed.styles?.[i]?.image ?? style.image,
+    })),
+    flashCards: defaults.flashCards.map((card, i) => ({
+      ...card,
+      image: parsed.flashCards?.[i]?.image ?? card.image,
+    })),
+    scale: {
+      ...defaults.scale,
+      images: defaults.scale.images.map((img, i) => ({
+        ...img,
+        src: parsed.scale?.images?.[i]?.src ?? img.src,
+      })),
+    },
+    instagramPosts: defaults.instagramPosts.map((post, i) => ({
+      ...post,
+      src: parsed.instagramPosts?.[i]?.src ?? post.src,
+    })),
+  };
+}
+
+function fixTopSectionLanguageLeak(
+  lang: Lang,
+  content: SiteContent,
+): SiteContent {
+  const otherLang: Lang = lang === "pt" ? "en" : "pt";
+  const desired = DEFAULTS[lang];
+  const leaked = DEFAULTS[otherLang];
+
+  const keepOrReplace = (
+    current: string,
+    leakedValue: string,
+    desiredValue: string,
+  ) => (current === leakedValue ? desiredValue : current);
+
+  return {
+    ...content,
+    stats: content.stats.map((item, i) => ({
+      ...item,
+      label: keepOrReplace(
+        item.label,
+        leaked.stats[i]?.label ?? "",
+        desired.stats[i]?.label ?? item.label,
+      ),
+    })),
+    hero: {
+      ...content.hero,
+      badge: keepOrReplace(
+        content.hero.badge,
+        leaked.hero.badge,
+        desired.hero.badge,
+      ),
+      subtitle: keepOrReplace(
+        content.hero.subtitle,
+        leaked.hero.subtitle,
+        desired.hero.subtitle,
+      ),
+      specialty: keepOrReplace(
+        content.hero.specialty,
+        leaked.hero.specialty,
+        desired.hero.specialty,
+      ),
+      ctaLabel: keepOrReplace(
+        content.hero.ctaLabel,
+        leaked.hero.ctaLabel,
+        desired.hero.ctaLabel,
+      ),
+    },
+    scale: {
+      ...content.scale,
+      title: keepOrReplace(
+        content.scale.title,
+        leaked.scale.title,
+        desired.scale.title,
+      ),
+      titleItalic: keepOrReplace(
+        content.scale.titleItalic,
+        leaked.scale.titleItalic,
+        desired.scale.titleItalic,
+      ),
+      body: keepOrReplace(
+        content.scale.body,
+        leaked.scale.body,
+        desired.scale.body,
+      ),
+      ctaLabel: keepOrReplace(
+        content.scale.ctaLabel,
+        leaked.scale.ctaLabel,
+        desired.scale.ctaLabel,
+      ),
+    },
+    process: {
+      ...content.process,
+      steps: content.process.steps.map((step, i) => ({
+        ...step,
+        title: keepOrReplace(
+          step.title,
+          leaked.process.steps[i]?.title ?? "",
+          desired.process.steps[i]?.title ?? step.title,
+        ),
+        desc: keepOrReplace(
+          step.desc,
+          leaked.process.steps[i]?.desc ?? "",
+          desired.process.steps[i]?.desc ?? step.desc,
+        ),
+      })),
+      ctaLabel: keepOrReplace(
+        content.process.ctaLabel,
+        leaked.process.ctaLabel,
+        desired.process.ctaLabel,
+      ),
+    },
+    faq: content.faq.map((item, i) => ({
+      ...item,
+      q: keepOrReplace(
+        item.q,
+        leaked.faq[i]?.q ?? "",
+        desired.faq[i]?.q ?? item.q,
+      ),
+      a: keepOrReplace(
+        item.a,
+        leaked.faq[i]?.a ?? "",
+        desired.faq[i]?.a ?? item.a,
+      ),
+    })),
+    aftercare: content.aftercare.map((item, i) => ({
+      ...item,
+      day: keepOrReplace(
+        item.day,
+        leaked.aftercare[i]?.day ?? "",
+        desired.aftercare[i]?.day ?? item.day,
+      ),
+      text: keepOrReplace(
+        item.text,
+        leaked.aftercare[i]?.text ?? "",
+        desired.aftercare[i]?.text ?? item.text,
+      ),
+    })),
+    testimonials: content.testimonials.map((item, i) => ({
+      ...item,
+      text: keepOrReplace(
+        item.text,
+        leaked.testimonials[i]?.text ?? "",
+        desired.testimonials[i]?.text ?? item.text,
+      ),
+      author: keepOrReplace(
+        item.author,
+        leaked.testimonials[i]?.author ?? "",
+        desired.testimonials[i]?.author ?? item.author,
+      ),
+      city: keepOrReplace(
+        item.city,
+        leaked.testimonials[i]?.city ?? "",
+        desired.testimonials[i]?.city ?? item.city,
+      ),
+    })),
+    cta: {
+      ...content.cta,
+      title: keepOrReplace(
+        content.cta.title,
+        leaked.cta.title,
+        desired.cta.title,
+      ),
+      titleItalic: keepOrReplace(
+        content.cta.titleItalic,
+        leaked.cta.titleItalic,
+        desired.cta.titleItalic,
+      ),
+      body: keepOrReplace(content.cta.body, leaked.cta.body, desired.cta.body),
+      ctaLabel: keepOrReplace(
+        content.cta.ctaLabel,
+        leaked.cta.ctaLabel,
+        desired.cta.ctaLabel,
+      ),
+    },
+    about: {
+      ...content.about,
+      headline: keepOrReplace(
+        content.about.headline,
+        leaked.about.headline,
+        desired.about.headline,
+      ),
+      body: keepOrReplace(
+        content.about.body,
+        leaked.about.body,
+        desired.about.body,
+      ),
+      ctaLabel: keepOrReplace(
+        content.about.ctaLabel,
+        leaked.about.ctaLabel,
+        desired.about.ctaLabel,
+      ),
+    },
+  };
+}
+
+function loadContent(lang: Lang): SiteContent {
   try {
-    const s = localStorage.getItem(STORAGE_KEY);
-    if (!s) return sanitizeContentImages(DEFAULT);
-    const parsed = JSON.parse(s);
-    // Merge with defaults so new fields are always present
-    const merged: SiteContent = {
-      ...DEFAULT,
-      ...parsed,
-      waNumber: normalizeWaNumber(parsed.waNumber ?? DEFAULT_WA_NUMBER),
-      textStyles: parsed.textStyles ?? {},
-      instagramPosts: parsed.instagramPosts ?? DEFAULT.instagramPosts,
-      flashCards: parsed.flashCards ?? DEFAULT.flashCards,
-      stats: parsed.stats ?? DEFAULT.stats,
-      faq: parsed.faq ?? DEFAULT.faq,
-      aftercare: parsed.aftercare ?? DEFAULT.aftercare,
-    };
-    return sanitizeContentImages(merged);
+    const defaults = DEFAULTS[lang];
+    const scopedKey = storageKeyFor(lang);
+    const fallbackLang: Lang = lang === "pt" ? "en" : "pt";
+    const fromScoped = localStorage.getItem(scopedKey);
+    const fromOtherLang = localStorage.getItem(storageKeyFor(fallbackLang));
+    const legacy = localStorage.getItem(STORAGE_KEY);
+
+    let parsedScoped: StoredSiteContent | null = null;
+    if (fromScoped) {
+      const scopedParsed = JSON.parse(fromScoped) as StoredSiteContent;
+      // Só confia em dados com marcador explícito do idioma correto.
+      if (scopedParsed._lang === lang) {
+        parsedScoped = scopedParsed;
+      } else {
+        const migrated = mergeSharedFromOtherLanguage(defaults, scopedParsed);
+        localStorage.setItem(
+          scopedKey,
+          JSON.stringify({ ...migrated, _lang: lang }),
+        );
+        return sanitizeContentImages(migrated);
+      }
+    }
+
+    if (parsedScoped) {
+      const mergedScoped = mergeWithDefaults(defaults, parsedScoped);
+      return sanitizeContentImages(
+        fixTopSectionLanguageLeak(lang, mergedScoped),
+      );
+    }
+
+    if (legacy) {
+      const parsedLegacy = JSON.parse(legacy) as StoredSiteContent;
+      const mergedFromLegacy = mergeWithDefaults(defaults, parsedLegacy);
+      localStorage.setItem(
+        scopedKey,
+        JSON.stringify({ ...mergedFromLegacy, _lang: lang }),
+      );
+      return sanitizeContentImages(
+        fixTopSectionLanguageLeak(lang, mergedFromLegacy),
+      );
+    }
+
+    if (fromOtherLang) {
+      const parsedOther = JSON.parse(fromOtherLang) as StoredSiteContent;
+      const mergedFromOtherLang = mergeSharedFromOtherLanguage(
+        defaults,
+        parsedOther,
+      );
+      localStorage.setItem(
+        scopedKey,
+        JSON.stringify({ ...mergedFromOtherLang, _lang: lang }),
+      );
+      return sanitizeContentImages(
+        fixTopSectionLanguageLeak(lang, mergedFromOtherLang),
+      );
+    }
+
+    return sanitizeContentImages(defaults);
   } catch {
-    return sanitizeContentImages(DEFAULT);
+    return sanitizeContentImages(DEFAULTS[lang]);
   }
 }
 
-function saveContent(c: SiteContent) {
+function saveContent(lang: Lang, c: SiteContent) {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(c));
+    localStorage.setItem(
+      storageKeyFor(lang),
+      JSON.stringify({ ...c, _lang: lang }),
+    );
   } catch {}
 }
 
@@ -841,6 +1421,8 @@ function EditableImage({
   alt,
   onChange,
   editMode,
+  uploadingLabel,
+  replaceImageLabel,
   className,
   imgClassName,
   children,
@@ -849,6 +1431,8 @@ function EditableImage({
   alt: string;
   onChange: (file: File) => void | Promise<void>;
   editMode: boolean;
+  uploadingLabel: string;
+  replaceImageLabel: string;
   className?: string;
   imgClassName?: string;
   children?: React.ReactNode;
@@ -869,7 +1453,7 @@ function EditableImage({
           <div className="opacity-0 group-hover/img:opacity-100 transition-opacity flex flex-col items-center gap-2 pointer-events-none">
             <Upload size={22} className="text-white drop-shadow-lg" />
             <span className="text-white text-[10px] tracking-[0.2em] uppercase drop-shadow">
-              {uploading ? "Enviando..." : "Substituir imagem"}
+              {uploading ? uploadingLabel : replaceImageLabel}
             </span>
           </div>
         </div>
@@ -921,10 +1505,12 @@ function FormatToolbar({
   focusedId,
   textStyles,
   onStyle,
+  tKeys,
 }: {
   focusedId: string | null;
   textStyles: Record<string, TextStyle>;
   onStyle: (id: string, patch: Partial<TextStyle>) => void;
+  tKeys: (typeof T)["pt"];
 }) {
   if (!focusedId) return null;
   const s = textStyles[focusedId] ?? {};
@@ -934,7 +1520,7 @@ function FormatToolbar({
   return (
     <div
       role="toolbar"
-      aria-label="Formatação de texto"
+      aria-label={tKeys.toolbar_aria}
       className="fixed bottom-16 lg:bottom-8 left-1/2 -translate-x-1/2 z-[200] flex items-center gap-0.5 bg-[#111110] border border-border px-2.5 py-2 shadow-2xl rounded-none flex-wrap justify-center max-w-[96vw]"
     >
       {/* Bold */}
@@ -944,7 +1530,7 @@ function FormatToolbar({
           e.preventDefault();
           upd({ fontWeight: s.fontWeight === "bold" ? "normal" : "bold" });
         }}
-        title="Negrito"
+        title={tKeys.toolbar_bold}
       >
         <Bold size={12} />
       </ToolBtn>
@@ -956,7 +1542,7 @@ function FormatToolbar({
           e.preventDefault();
           upd({ fontStyle: s.fontStyle === "italic" ? "normal" : "italic" });
         }}
-        title="Itálico"
+        title={tKeys.toolbar_italic}
       >
         <Italic size={12} />
       </ToolBtn>
@@ -975,7 +1561,13 @@ function FormatToolbar({
               e.preventDefault();
               upd({ textAlign: a });
             }}
-            title={`Alinhar ${a}`}
+            title={
+              a === "left"
+                ? tKeys.toolbar_align_left
+                : a === "center"
+                  ? tKeys.toolbar_align_center
+                  : tKeys.toolbar_align_right
+            }
           >
             <Icon size={12} />
           </ToolBtn>
@@ -1007,7 +1599,7 @@ function FormatToolbar({
           e.preventDefault();
           upd({ fontSize: SIZES[Math.max(0, sIdx - 1)] });
         }}
-        title="Diminuir"
+        title={tKeys.toolbar_decrease}
       >
         <span className="text-[10px] font-mono leading-none">A-</span>
       </ToolBtn>
@@ -1017,14 +1609,14 @@ function FormatToolbar({
           e.preventDefault();
           upd({ fontSize: SIZES[Math.min(SIZES.length - 1, sIdx + 1)] });
         }}
-        title="Aumentar"
+        title={tKeys.toolbar_increase}
       >
         <span className="text-[10px] font-mono leading-none">A+</span>
       </ToolBtn>
 
       <Sep />
       <span className="text-[9px] text-muted-foreground/50 hidden sm:block px-1">
-        F8 para sair
+        {tKeys.toolbar_f8_exit}
       </span>
     </div>
   );
@@ -1170,6 +1762,8 @@ function SettingsPanel({
               onClick={() => {
                 if (!confirm(tKeys.settings_reset_confirm)) return;
                 localStorage.removeItem(STORAGE_KEY);
+                localStorage.removeItem(storageKeyFor("pt"));
+                localStorage.removeItem(storageKeyFor("en"));
                 window.location.reload();
               }}
               className="w-full border border-border text-muted-foreground text-xs tracking-widest uppercase py-2.5 hover:border-destructive hover:text-destructive transition-colors"
@@ -1247,7 +1841,13 @@ function EditorBar({
 
 // ─── Cookie Banner (LGPD) ────────────────────────────────────────────────────
 
-function CookieBanner({ tKeys }: { tKeys: (typeof T)["pt"] }) {
+function CookieBanner({
+  tKeys,
+  lang,
+}: {
+  tKeys: (typeof T)["pt"];
+  lang: Lang;
+}) {
   const [visible, setVisible] = useState(
     () => !localStorage.getItem("cookie_consent"),
   );
@@ -1282,66 +1882,143 @@ function CookieBanner({ tKeys }: { tKeys: (typeof T)["pt"] }) {
               </button>
             </div>
             <div className="overflow-y-auto p-6 space-y-5 text-sm text-muted-foreground leading-loose">
-              <p>
-                <strong className="text-foreground">
-                  1. Responsável pelos dados
-                </strong>
-                <br />
-                Ísis Mariana, tatuadora profissional com sede em Fortaleza, CE,
-                Brasil. Contato: via WhatsApp ou Instagram indicados neste site.
-              </p>
-              <p>
-                <strong className="text-foreground">2. Dados coletados</strong>
-                <br />
-                Este site não coleta dados pessoais diretamente. Ao clicar nos
-                botões de WhatsApp ou Instagram, você é redirecionado para
-                plataformas externas regidas pelas políticas de privacidade
-                próprias dessas plataformas.
-              </p>
-              <p>
-                <strong className="text-foreground">
-                  3. Cookies e rastreamento
-                </strong>
-                <br />
-                Utilizamos cookies essenciais para o funcionamento do site
-                (preferências de tema e idioma, armazenadas localmente). Com seu
-                consentimento, podemos utilizar cookies analíticos (Google
-                Analytics) e de publicidade (Meta Pixel) para mensurar o
-                desempenho das campanhas.
-              </p>
-              <p>
-                <strong className="text-foreground">
-                  4. Base legal (LGPD)
-                </strong>
-                <br />O tratamento de dados baseia-se no legítimo interesse
-                (Art. 7º, IX, Lei 13.709/2018) e no consentimento do titular
-                (Art. 7º, I) para cookies opcionais.
-              </p>
-              <p>
-                <strong className="text-foreground">5. Seus direitos</strong>
-                <br />
-                Você tem direito a confirmar, acessar, corrigir, anonimizar,
-                bloquear ou eliminar dados desnecessários, portabilidade,
-                informação sobre compartilhamento e revogação do consentimento,
-                nos termos dos Art. 17 a 22 da LGPD.
-              </p>
-              <p>
-                <strong className="text-foreground">6. Compartilhamento</strong>
-                <br />
-                Nenhum dado coletado neste site é compartilhado com terceiros
-                sem consentimento, exceto plataformas de análise devidamente
-                autorizadas.
-              </p>
-              <p>
-                <strong className="text-foreground">7. Contato</strong>
-                <br />
-                Para exercer seus direitos ou obter mais informações, entre em
-                contato via WhatsApp ou Instagram indicados no rodapé deste
-                site.
-              </p>
-              <p className="text-xs text-muted-foreground/60">
-                Última atualização: julho de 2025
-              </p>
+              {lang === "pt" ? (
+                <>
+                  <p>
+                    <strong className="text-foreground">
+                      1. Responsável pelos dados
+                    </strong>
+                    <br />
+                    Ísis Mariana, tatuadora profissional com sede em Fortaleza,
+                    CE, Brasil. Contato: via WhatsApp ou Instagram indicados
+                    neste site.
+                  </p>
+                  <p>
+                    <strong className="text-foreground">
+                      2. Dados coletados
+                    </strong>
+                    <br />
+                    Este site não coleta dados pessoais diretamente. Ao clicar
+                    nos botões de WhatsApp ou Instagram, você é redirecionado
+                    para plataformas externas regidas pelas políticas de
+                    privacidade próprias dessas plataformas.
+                  </p>
+                  <p>
+                    <strong className="text-foreground">
+                      3. Cookies e rastreamento
+                    </strong>
+                    <br />
+                    Utilizamos cookies essenciais para o funcionamento do site
+                    (preferências de tema e idioma, armazenadas localmente). Com
+                    seu consentimento, podemos utilizar cookies analíticos
+                    (Google Analytics) e de publicidade (Meta Pixel) para
+                    mensurar o desempenho das campanhas.
+                  </p>
+                  <p>
+                    <strong className="text-foreground">
+                      4. Base legal (LGPD)
+                    </strong>
+                    <br />O tratamento de dados baseia-se no legítimo interesse
+                    (Art. 7º, IX, Lei 13.709/2018) e no consentimento do titular
+                    (Art. 7º, I) para cookies opcionais.
+                  </p>
+                  <p>
+                    <strong className="text-foreground">
+                      5. Seus direitos
+                    </strong>
+                    <br />
+                    Você tem direito a confirmar, acessar, corrigir, anonimizar,
+                    bloquear ou eliminar dados desnecessários, portabilidade,
+                    informação sobre compartilhamento e revogação do
+                    consentimento, nos termos dos Art. 17 a 22 da LGPD.
+                  </p>
+                  <p>
+                    <strong className="text-foreground">
+                      6. Compartilhamento
+                    </strong>
+                    <br />
+                    Nenhum dado coletado neste site é compartilhado com
+                    terceiros sem consentimento, exceto plataformas de análise
+                    devidamente autorizadas.
+                  </p>
+                  <p>
+                    <strong className="text-foreground">7. Contato</strong>
+                    <br />
+                    Para exercer seus direitos ou obter mais informações, entre
+                    em contato via WhatsApp ou Instagram indicados no rodapé
+                    deste site.
+                  </p>
+                  <p className="text-xs text-muted-foreground/60">
+                    Última atualização: julho de 2025
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p>
+                    <strong className="text-foreground">
+                      1. Data controller
+                    </strong>
+                    <br />
+                    Ísis Mariana, professional tattoo artist based in Fortaleza,
+                    CE, Brazil. Contact: WhatsApp or Instagram listed on this
+                    website.
+                  </p>
+                  <p>
+                    <strong className="text-foreground">
+                      2. Data collected
+                    </strong>
+                    <br />
+                    This website does not directly collect personal data. When
+                    you click WhatsApp or Instagram buttons, you are redirected
+                    to external platforms governed by their own privacy
+                    policies.
+                  </p>
+                  <p>
+                    <strong className="text-foreground">
+                      3. Cookies and tracking
+                    </strong>
+                    <br />
+                    We use essential cookies for website functionality (theme
+                    and language preferences stored locally). With your consent,
+                    we may use analytics cookies (Google Analytics) and
+                    advertising cookies (Meta Pixel) to measure campaign
+                    performance.
+                  </p>
+                  <p>
+                    <strong className="text-foreground">
+                      4. Legal basis (LGPD)
+                    </strong>
+                    <br />
+                    Data processing is based on legitimate interest (Art. 7, IX,
+                    Law 13.709/2018) and consent (Art. 7, I) for optional
+                    cookies.
+                  </p>
+                  <p>
+                    <strong className="text-foreground">5. Your rights</strong>
+                    <br />
+                    You have the right to confirm, access, correct, anonymize,
+                    block or delete unnecessary data, portability, information
+                    on sharing, and withdrawal of consent, under Arts. 17 to 22
+                    of LGPD.
+                  </p>
+                  <p>
+                    <strong className="text-foreground">6. Sharing</strong>
+                    <br />
+                    No data collected on this website is shared with third
+                    parties without consent, except duly authorized analytics
+                    platforms.
+                  </p>
+                  <p>
+                    <strong className="text-foreground">7. Contact</strong>
+                    <br />
+                    To exercise your rights or request more information, contact
+                    us via WhatsApp or Instagram listed in the footer.
+                  </p>
+                  <p className="text-xs text-muted-foreground/60">
+                    Last updated: July 2025
+                  </p>
+                </>
+              )}
             </div>
             <div className="px-6 py-4 border-t border-border flex-shrink-0">
               <button
@@ -1425,8 +2102,14 @@ export default function App() {
   const lastF8ToggleAt = useRef(0);
   const f8PressCount = useRef(0);
   const f8WindowStartedAt = useRef(0);
+  const ENABLE_LOCAL_EDIT_SHORTCUT =
+    import.meta.env.DEV &&
+    import.meta.env.VITE_ENABLE_LOCAL_EDIT_SHORTCUT === "true";
 
-  const [content, setContent] = useState<SiteContent>(loadContent);
+  const [lang, setLang] = useState<Lang>(
+    () => (localStorage.getItem("site_lang") as Lang) ?? "pt",
+  );
+  const [content, setContent] = useState<SiteContent>(() => loadContent(lang));
   const [editMode, setEditMode] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [focusedId, setFocusedId] = useState<string | null>(null);
@@ -1435,9 +2118,6 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [theme, setTheme] = useState<Theme>(
     () => (localStorage.getItem("site_theme") as Theme) ?? "dark",
-  );
-  const [lang, setLang] = useState<Lang>(
-    () => (localStorage.getItem("site_lang") as Lang) ?? "pt",
   );
   const t = T[lang];
 
@@ -1491,6 +2171,8 @@ export default function App() {
 
   // F8 → 5x para entrar no modo edição, 1x para sair
   useEffect(() => {
+    if (!ENABLE_LOCAL_EDIT_SHORTCUT) return;
+
     const F8_ENTER_COUNT = 5;
     const F8_ENTER_WINDOW_MS = 4000;
 
@@ -1539,9 +2221,7 @@ export default function App() {
       const remaining = F8_ENTER_COUNT - f8PressCount.current;
 
       if (remaining > 0) {
-        toast.info(
-          `Pressione F8 mais ${remaining}x para entrar no modo edição`,
-        );
+        toast.info(`${t.press_f8_more} ${remaining}x ${t.to_enter_edit_mode}`);
         return;
       }
 
@@ -1552,12 +2232,18 @@ export default function App() {
     };
     window.addEventListener("keydown", fn);
     return () => window.removeEventListener("keydown", fn);
-  }, [editMode]);
+  }, [editMode, ENABLE_LOCAL_EDIT_SHORTCUT]);
 
-  // Auto-save every time content changes
+  // Auto-save only when content changes.
+  // (If we also depend on `lang`, switching language can save stale content
+  // from the previous language into the new language key.)
   useEffect(() => {
-    saveContent(content);
+    saveContent(lang, content);
   }, [content]);
+
+  useEffect(() => {
+    setContent(loadContent(lang));
+  }, [lang]);
 
   // Persist theme & lang
   useEffect(() => {
@@ -1580,7 +2266,7 @@ export default function App() {
 
   // ── Derived ───────────────────────────────────────────────────────────────
 
-  const WA_LINK = `https://wa.me/${normalizeWaNumber(content.waNumber)}?text=${encodeURIComponent("Olá, vim pelo site e gostaria de solicitar um orçamento para uma tatuagem.")}`;
+  const WA_LINK = `https://wa.me/${normalizeWaNumber(content.waNumber)}?text=${encodeURIComponent(t.wa_prefill)}`;
 
   // ── Content helpers ───────────────────────────────────────────────────────
 
@@ -1598,7 +2284,12 @@ export default function App() {
   const setTopKey = (k: keyof SiteContent, v: string) =>
     setContent((prev) => ({
       ...prev,
-      [k]: k === "waNumber" ? normalizeWaNumber(v) : v,
+      [k]:
+        k === "waNumber"
+          ? normalizeWaNumber(v)
+          : k === "instagram"
+            ? normalizeInstagramUrl(v)
+            : v,
     }));
 
   const setTextStyle = (id: string, patch: Partial<TextStyle>) =>
@@ -1660,6 +2351,8 @@ export default function App() {
       alt={alt}
       onChange={onChange}
       editMode={editMode}
+      uploadingLabel={t.uploading}
+      replaceImageLabel={t.replace_image}
       className={className}
       imgClassName={imgClassName}
     >
@@ -1676,10 +2369,10 @@ export default function App() {
     try {
       const imageUrl = await uploadImageToBackend(file, title, category);
       setter(imageUrl);
-      toast.success("Imagem enviada com sucesso");
+      toast.success(t.upload_success);
     } catch (error) {
       console.error(error);
-      toast.error("Não foi possível enviar a imagem");
+      toast.error(t.upload_error);
     }
   };
 
@@ -1740,7 +2433,7 @@ export default function App() {
       style={theme === "light" ? LIGHT_VARS : undefined}
     >
       <Toaster theme="dark" position="top-center" />
-      <CookieBanner tKeys={t} />
+      <CookieBanner tKeys={t} lang={lang} />
 
       {/* ── Editor overlay ───────────────────────────────────────────────── */}
       {editMode && (
@@ -1749,13 +2442,13 @@ export default function App() {
             tKeys={t}
             onSettings={() => setSettingsOpen((v) => !v)}
             onPublish={() => {
-              saveContent(content);
+              saveContent(lang, content);
               toast.success(t.published_ok, { description: t.published_desc });
             }}
           />
           <div
             className="fixed bottom-20 right-5 z-[150] w-9 h-9 bg-primary flex items-center justify-center shadow-xl"
-            title="Modo de edição ativo"
+            title={t.edit_mode_active}
           >
             <Edit3 size={14} className="text-primary-foreground" />
           </div>
@@ -1777,6 +2470,7 @@ export default function App() {
         focusedId={focusedId}
         textStyles={content.textStyles}
         onStyle={setTextStyle}
+        tKeys={t}
       />
 
       {/* ── NAV ─────────────────────────────────────────────────────────── */}
@@ -1822,7 +2516,7 @@ export default function App() {
             <button
               onClick={() => setMenuOpen((v) => !v)}
               className="flex items-center justify-center w-10 h-10"
-              aria-label="Menu"
+              aria-label={t.menu_aria}
             >
               {menuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -2008,7 +2702,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto">
           <div className="mb-5">
             <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
-              Sobre
+              {t.sec_about}
             </p>
             <div className="w-5 h-px bg-primary mt-2" />
           </div>
@@ -2048,7 +2742,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto">
           <div className="mb-5">
             <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
-              Portfolio
+              {t.sec_portfolio}
             </p>
             <div className="w-5 h-px bg-primary mt-2" />
           </div>
@@ -2056,7 +2750,7 @@ export default function App() {
             className="text-4xl lg:text-6xl text-foreground mb-10 leading-none"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Estilos
+            {t.portfolio_heading}
           </h2>
 
           {editMode && (
@@ -2069,8 +2763,11 @@ export default function App() {
                       ...content.styles,
                       {
                         id: `s${Date.now()}`,
-                        name: "Novo Estilo",
-                        desc: "Clique para editar a descrição.",
+                        name: lang === "pt" ? "Novo Estilo" : "New Style",
+                        desc:
+                          lang === "pt"
+                            ? "Clique para editar a descrição."
+                            : "Click to edit the description.",
                         image: PLACEHOLDER_UPLOAD_IMAGE,
                       },
                     ],
@@ -2078,10 +2775,10 @@ export default function App() {
                 }
                 className="flex items-center gap-2 text-[10px] tracking-[0.15em] uppercase text-primary border border-primary/30 px-3 py-2 hover:bg-primary/10 transition-colors"
               >
-                <Plus size={11} /> Adicionar estilo
+                <Plus size={11} /> {t.add_style_plain}
               </button>
               <span className="text-[10px] text-muted-foreground">
-                Arraste para reordenar
+                {t.drag_hint}
               </span>
             </div>
           )}
@@ -2149,7 +2846,7 @@ export default function App() {
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 text-[10px] tracking-[0.15em] uppercase text-primary opacity-0 group-hover:opacity-100 transition-opacity"
                   >
-                    <MessageCircle size={10} /> Orçamento
+                    <MessageCircle size={10} /> {t.budget_short}
                   </a>
                 </div>
               </div>
@@ -2361,7 +3058,7 @@ export default function App() {
               >
                 <Plus size={24} className="mb-2" />
                 <span className="text-[10px] tracking-[0.15em] uppercase">
-                  Adicionar
+                  {t.add_generic}
                 </span>
               </button>
             )}
@@ -2386,7 +3083,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto">
           <div className="mb-5">
             <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
-              Grande Escala
+              {t.scale_heading}
             </p>
             <div className="w-5 h-px bg-primary mt-2" />
           </div>
@@ -2532,7 +3229,7 @@ export default function App() {
                 }
                 className="flex items-center gap-2 text-[10px] tracking-[0.15em] uppercase text-primary border border-primary/30 px-3 py-2 hover:bg-primary/10 transition-colors"
               >
-                <Plus size={11} /> Adicionar imagem à galeria
+                <Plus size={11} /> {t.add_gallery_image}
               </button>
             </div>
           )}
@@ -2556,7 +3253,7 @@ export default function App() {
         <div className="max-w-3xl mx-auto">
           <div className="mb-5">
             <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
-              Processo
+              {t.sec_process}
             </p>
             <div className="w-5 h-px bg-primary mt-2" />
           </div>
@@ -2564,9 +3261,9 @@ export default function App() {
             className="text-4xl lg:text-6xl text-foreground mb-12 leading-tight"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Como solicitar
+            {t.process_heading}
             <br />
-            seu orçamento
+            {t.process_heading_line2}
           </h2>
 
           {content.process.steps.map((step, i) => (
@@ -2642,7 +3339,7 @@ export default function App() {
                     }
                     className="mt-2 flex items-center gap-1 text-[10px] uppercase tracking-widest text-muted-foreground hover:text-destructive transition-colors"
                   >
-                    <Trash2 size={9} /> Remover passo
+                    <Trash2 size={9} /> {t.remove_step}
                   </button>
                 )}
               </div>
@@ -2667,7 +3364,7 @@ export default function App() {
               }
               className="flex items-center gap-2 text-[10px] tracking-[0.15em] uppercase text-primary border border-primary/30 px-3 py-2 mb-8 hover:bg-primary/10 transition-colors"
             >
-              <Plus size={11} /> Adicionar passo
+              <Plus size={11} /> {t.add_step_plain}
             </button>
           )}
 
@@ -2705,15 +3402,15 @@ export default function App() {
                       ...content.faq,
                       {
                         id: `fq${Date.now()}`,
-                        q: "Nova pergunta?",
-                        a: "Resposta aqui.",
+                        q: t.new_question,
+                        a: t.new_answer,
                       },
                     ],
                   )
                 }
                 className="mt-6 flex items-center gap-2 text-[10px] tracking-[0.15em] uppercase text-primary border border-primary/30 px-3 py-2 hover:bg-primary/10 transition-colors"
               >
-                <Plus size={11} /> Adicionar pergunta
+                <Plus size={11} /> {t.add_question}
               </button>
             )}
           </div>
@@ -2793,8 +3490,7 @@ export default function App() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 border border-border text-foreground text-xs tracking-[0.18em] uppercase px-6 py-4 min-h-[52px] hover:border-primary hover:text-primary active:scale-[0.98] transition-all"
               >
-                <MessageCircle size={14} />{" "}
-                {lang === "pt" ? "Tenho outra dúvida" : "Ask another question"}{" "}
+                <MessageCircle size={14} /> {t.ask_another_question}{" "}
                 <ArrowUpRight size={12} />
               </a>
             </div>
@@ -2883,15 +3579,15 @@ export default function App() {
                     ...content.aftercare,
                     {
                       id: `ac${Date.now()}`,
-                      day: "Período",
-                      text: "Instrução de cuidado.",
+                      day: t.default_period,
+                      text: t.default_care_instruction,
                     },
                   ],
                 )
               }
               className="flex items-center gap-2 text-[10px] tracking-[0.15em] uppercase text-primary border border-primary/30 px-3 py-2 hover:bg-primary/10 transition-colors"
             >
-              <Plus size={11} /> Adicionar período
+              <Plus size={11} /> {t.add_period}
             </button>
           )}
         </div>
@@ -2905,7 +3601,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto">
           <div className="mb-5">
             <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
-              Clientes
+              {t.sec_clients}
             </p>
             <div className="w-5 h-px bg-primary mt-2" />
           </div>
@@ -2913,7 +3609,7 @@ export default function App() {
             className="text-4xl lg:text-6xl text-foreground mb-10 leading-none"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Experiências
+            {t.clients_heading}
           </h2>
 
           {editMode && (
@@ -2939,7 +3635,7 @@ export default function App() {
                 <Plus size={11} /> Adicionar depoimento
               </button>
               <span className="text-[10px] text-muted-foreground">
-                Arraste para reordenar
+                {t.drag_hint}
               </span>
             </div>
           )}
@@ -3037,7 +3733,7 @@ export default function App() {
         <div className="absolute inset-0 bg-gradient-to-b from-card/60 to-card/60 pointer-events-none" />
         <div className="relative max-w-2xl mx-auto text-center">
           <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-6">
-            Contato
+            {t.contact_heading}
           </p>
           <div
             className="text-4xl lg:text-6xl text-foreground leading-tight mb-5"
@@ -3101,7 +3797,7 @@ export default function App() {
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-[10px] tracking-[0.2em] uppercase text-muted-foreground hover:text-foreground transition-colors"
             >
-              Ver perfil <ArrowUpRight size={11} />
+              {t.see_profile} <ArrowUpRight size={11} />
             </a>
           </div>
 
@@ -3145,7 +3841,7 @@ export default function App() {
                 {editMode && (
                   <div className="absolute bottom-2 left-2 right-2 z-20 pointer-events-none">
                     <span className="text-[9px] tracking-widest uppercase text-white/50">
-                      Post {i + 1}
+                      {t.post} {i + 1}
                     </span>
                   </div>
                 )}
@@ -3161,14 +3857,13 @@ export default function App() {
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-[10px] tracking-[0.2em] uppercase text-muted-foreground border border-border px-5 py-3 hover:border-primary hover:text-primary transition-all duration-300 min-h-[44px]"
             >
-              <Instagram size={13} /> Seguir no Instagram
+              <Instagram size={13} /> {t.follow_ig}
             </a>
           </div>
 
           {editMode && (
             <p className="text-[10px] text-muted-foreground/60 text-center mt-4">
-              Clique em cada imagem para substituir pelas suas postagens reais
-              do Instagram.
+              {t.insta_hint}
             </p>
           )}
         </div>
@@ -3236,7 +3931,7 @@ export default function App() {
           {/* Col 3 — Navigation */}
           <div>
             <p className="text-[10px] tracking-[0.25em] uppercase text-muted-foreground mb-5">
-              Links
+              {t.sec_links}
             </p>
             <nav className="flex flex-col gap-2.5">
               {[
@@ -3262,14 +3957,14 @@ export default function App() {
           {/* Col 4 — Location + hours */}
           <div>
             <p className="text-[10px] tracking-[0.25em] uppercase text-muted-foreground mb-5">
-              {lang === "pt" ? "Localização" : "Location"}
+              {t.sec_location}
             </p>
             <div className="space-y-1 mb-6">
               <p className="text-sm text-foreground">Fortaleza, CE</p>
-              <p className="text-xs text-muted-foreground">Brasil</p>
+              <p className="text-xs text-muted-foreground">{t.country}</p>
             </div>
             <p className="text-[10px] tracking-[0.25em] uppercase text-muted-foreground mb-3">
-              {lang === "pt" ? "Atendimento" : "Schedule"}
+              {t.sec_schedule}
             </p>
             <p className="text-xs text-muted-foreground leading-relaxed">
               {lang === "pt"
@@ -3292,7 +3987,7 @@ export default function App() {
                 window.location.reload();
               }}
               className="text-[10px] text-muted-foreground/40 tracking-wider hover:text-muted-foreground transition-colors flex items-center gap-1"
-              title="Gerenciar cookies"
+              title={t.manage_cookies}
             >
               <Shield size={9} /> {lang === "pt" ? "Privacidade" : "Privacy"}
             </button>
