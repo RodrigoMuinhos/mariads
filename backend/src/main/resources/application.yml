@@ -4,9 +4,11 @@ spring:
   config:
     import: optional:file:.env[.properties]
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/tattoo}
-    username: ${SPRING_DATASOURCE_USERNAME:postgres}
-    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
+    # SPRING_DATASOURCE_* continua sendo a configuracao preferencial. Os
+    # fallbacks PG* permitem conectar diretamente a um PostgreSQL do Railway.
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://${PGHOST:localhost}:${PGPORT:5432}/${PGDATABASE:tattoo}${PGSSLMODE_QUERY:}}
+    username: ${SPRING_DATASOURCE_USERNAME:${PGUSER:postgres}}
+    password: ${SPRING_DATASOURCE_PASSWORD:${PGPASSWORD:postgres}}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -21,7 +23,7 @@ spring:
       max-request-size: 15MB
 
 server:
-  port: ${SERVER_PORT:8080}
+  port: ${PORT:${SERVER_PORT:8080}}
 
 app:
   public-base-url: ${APP_PUBLIC_BASE_URL:http://localhost:${server.port}}

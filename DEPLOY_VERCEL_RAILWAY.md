@@ -3,12 +3,13 @@
 ## 1) Backend (Railway)
 
 - Crie um novo projeto na Railway apontando para este repositório.
-- Selecione a pasta `backend` como root do serviço.
-- Configure variáveis de ambiente usando `backend/.env.example` como base.
-- Build command:
-  - `mvn clean package -DskipTests`
-- Start command:
-  - `java -Dserver.port=$PORT -jar target/tattoo-backend-0.0.1-SNAPSHOT.jar`
+- Mantenha a raiz do serviço na raiz do repositório. O `railway.toml` usa o
+  `Dockerfile` e configura o health check automaticamente.
+- Adicione um serviço PostgreSQL ao mesmo projeto.
+- No serviço do backend, crie referências para as variáveis do PostgreSQL:
+  `PGHOST`, `PGPORT`, `PGDATABASE`, `PGUSER` e `PGPASSWORD`.
+- Configure `APP_PUBLIC_BASE_URL` com o domínio público do backend.
+- Configure `APP_CORS_ORIGIN` com o domínio publicado do frontend.
 
 ## 2) Frontend (Vercel)
 
