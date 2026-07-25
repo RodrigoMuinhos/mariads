@@ -416,6 +416,40 @@ const PUBLIC_IMAGES = [
   "/flashes/da6a14a9-a698-4ed9-b575-7416a2979e49.jpeg",
   "/fc47cace-1002-44e4-a0a0-024185783148.jpeg",
 ] as const;
+const INSTAGRAM_IMAGE_POOL = [
+  "/estilos/Anime.jpeg",
+  "/estilos/Blackwork.jpeg",
+  "/estilos/Geométrico.jpeg",
+  "/estilos/Neo Tradicional.jpeg",
+  "/estilos/Ornamental.jpeg",
+  "/estilos/Preto e Cinza.jpeg",
+  "/estilos/Suminagashi.jpeg",
+  "/estilos/Tribal.jpeg",
+  "/flashes/0591475e-7b5c-4da1-a94b-694799fe11f8.jpeg",
+  "/flashes/05ea3a93-da13-4996-9b8e-71764f49f082.jpeg",
+  "/flashes/0af3ba06-d728-4f8f-9237-e339dba54dd4.jpeg",
+  "/flashes/218fbd4e-95c5-4d26-ac34-f039fce66d5d.jpeg",
+  "/flashes/2ab476c6-756a-4ed0-a4cb-0711f357b735.jpeg",
+  "/flashes/348dd3ae-5a3c-461a-a3d6-8e4522ecd882.jpeg",
+  "/flashes/36fdc640-35c6-424a-b5e8-a5498aa42915.jpeg",
+  "/flashes/99c63222-098a-4c8a-8273-be542da2373e.jpeg",
+  "/flashes/bb3936de-9969-44ca-9be4-07986a6a8bdf.jpeg",
+  "/flashes/da6a14a9-a698-4ed9-b575-7416a2979e49.jpeg",
+  "/projetosgrandes/15383bee-c75c-4445-9e1e-4cf616472f83.jpeg",
+  "/projetosgrandes/255b9cce-af17-480d-a07c-f6b2285e852b.jpeg",
+  "/projetosgrandes/3cb44583-3a0b-45c4-a536-2e39e1e31889.jpeg",
+  "/projetosgrandes/7b2f14d6-6822-4f25-aa37-5bc8ed7e1355.jpeg",
+] as const;
+const INSTAGRAM_ROTATION_MS = 3 * 60 * 1000;
+
+function pickRandomInstagramImages(): string[] {
+  const shuffled = [...INSTAGRAM_IMAGE_POOL];
+  for (let i = shuffled.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled.slice(0, 3);
+}
 
 function normalizeWaNumber(raw: string): string {
   const digits = (raw ?? "").replace(/\D/g, "");
@@ -761,17 +795,17 @@ const DEFAULT: SiteContent = {
   instagramPosts: [
     {
       id: "ig1",
-      src: PUBLIC_IMAGES[19],
+      src: INSTAGRAM_IMAGE_POOL[0],
       alt: "Postagem Instagram 1",
     },
     {
       id: "ig2",
-      src: PUBLIC_IMAGES[20],
+      src: INSTAGRAM_IMAGE_POOL[1],
       alt: "Postagem Instagram 2",
     },
     {
       id: "ig3",
-      src: PUBLIC_IMAGES[21],
+      src: INSTAGRAM_IMAGE_POOL[2],
       alt: "Postagem Instagram 3",
     },
   ],
@@ -975,7 +1009,7 @@ const DEFAULTS: Record<Lang, SiteContent> = {
 
 // ─── Storage ──────────────────────────────────────────────────────────────────
 
-const STORAGE_KEY = "isis_site_v7";
+const STORAGE_KEY = "isis_site_v8";
 const PLACEHOLDER_UPLOAD_IMAGE = "/placeholder-upload.svg";
 
 function storageKeyFor(lang: Lang): string {
@@ -2114,10 +2148,20 @@ export default function App() {
   const [scrolled, setScrolled] = useState(false);
   const [pastHero, setPastHero] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [instagramImages, setInstagramImages] = useState<string[]>(
+    pickRandomInstagramImages,
+  );
   const [theme, setTheme] = useState<Theme>(
     () => (localStorage.getItem("site_theme") as Theme) ?? "dark",
   );
   const t = T[lang];
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setInstagramImages(pickRandomInstagramImages());
+    }, INSTAGRAM_ROTATION_MS);
+    return () => window.clearInterval(timer);
+  }, []);
 
   // ── Flash carousel — avança 3 cards a cada 3 s ───────────────────────────
   const flashRef = useRef<HTMLDivElement>(null);
@@ -3736,18 +3780,18 @@ export default function App() {
 
           {/* Posts grid / carousel */}
           <div className="grid grid-cols-3 gap-px bg-border">
-            {content.instagramPosts.map((post, i) => (
+            {instagramImages.map((src, i) => (
               <div
-                key={post.id}
+                key={src}
                 className="relative group aspect-square bg-[#111] overflow-hidden"
               >
                 {EI(
-                  post.src,
-                  post.alt,
+                  src,
+                  `Postagem Instagram ${i + 1}`,
                   (file) =>
                     uploadAndSetImage(
                       file,
-                      post.alt || `Instagram ${i + 1}`,
+                      `Instagram ${i + 1}`,
                       (url) => setDeep(["instagramPosts", i, "src"], url),
                       "instagram",
                     ),
