@@ -392,6 +392,30 @@ const API_BASE = (
 ).replace(/\/$/, "");
 const DEFAULT_WA_NUMBER = "5585996327634";
 const DEFAULT_INSTAGRAM_URL = "https://www.instagram.com/isismarianatattoo";
+const PUBLIC_IMAGES = [
+  "/0591475e-7b5c-4da1-a94b-694799fe11f8.jpeg",
+  "/05ea3a93-da13-4996-9b8e-71764f49f082.jpeg",
+  "/0ae50973-7d7a-41d0-92ae-d702f9f344c1.jpeg",
+  "/0af3ba06-d728-4f8f-9237-e339dba54dd4.jpeg",
+  "/15383bee-c75c-4445-9e1e-4cf616472f83.jpeg",
+  "/1a939d49-6ab8-4b53-a17a-039f96e14dda.jpeg",
+  "/218fbd4e-95c5-4d26-ac34-f039fce66d5d.jpeg",
+  "/255b9cce-af17-480d-a07c-f6b2285e852b.jpeg",
+  "/2ab476c6-756a-4ed0-a4cb-0711f357b735.jpeg",
+  "/348dd3ae-5a3c-461a-a3d6-8e4522ecd882.jpeg",
+  "/36fdc640-35c6-424a-b5e8-a5498aa42915.jpeg",
+  "/38ee45f5-87e2-4b50-852f-773efdc9576f.jpeg",
+  "/3cb44583-3a0b-45c4-a536-2e39e1e31889.jpeg",
+  "/466147c2-b1ca-42cf-b356-7187f2598936.jpeg",
+  "/575b3a30-f99a-4155-8457-ee303e035aa4.jpeg",
+  "/7b2f14d6-6822-4f25-aa37-5bc8ed7e1355.jpeg",
+  "/99c63222-098a-4c8a-8273-be542da2373e.jpeg",
+  "/9d38ed3e-9afc-45bc-8943-0afefb5a3355.jpeg",
+  "/bb3936de-9969-44ca-9be4-07986a6a8bdf.jpeg",
+  "/c0b21a4b-d4ba-4e5e-86e9-40da8abd5960.jpeg",
+  "/da6a14a9-a698-4ed9-b575-7416a2979e49.jpeg",
+  "/fc47cace-1002-44e4-a0a0-024185783148.jpeg",
+] as const;
 
 function normalizeWaNumber(raw: string): string {
   const digits = (raw ?? "").replace(/\D/g, "");
@@ -521,8 +545,7 @@ const DEFAULT: SiteContent = {
     subtitle: "Tatuagens autorais em Fortaleza",
     specialty:
       "Especialista em blackwork, ornamental e projetos de grande escala.",
-    image:
-      "https://images.unsplash.com/photo-1759096326551-9ad3745f0431?w=800&h=1000&fit=crop&auto=format",
+    image: PUBLIC_IMAGES[0],
     ctaLabel: "Solicitar orçamento",
   },
   about: {
@@ -536,57 +559,49 @@ const DEFAULT: SiteContent = {
       id: "s1",
       name: "Blackwork",
       desc: "Contraste, composição e presença.",
-      image:
-        "https://images.unsplash.com/photo-1640202352521-66c98a02e612?w=500&h=700&fit=crop&auto=format",
+      image: PUBLIC_IMAGES[1],
     },
     {
       id: "s2",
       name: "Ornamental",
       desc: "Inspirado em padrões decorativos, simetria e fluidez.",
-      image:
-        "https://images.unsplash.com/photo-1566485763217-b5dfcc375a09?w=500&h=700&fit=crop&auto=format",
+      image: PUBLIC_IMAGES[2],
     },
     {
       id: "s3",
       name: "Tribal",
       desc: "Linhas marcantes, movimento e identidade.",
-      image:
-        "https://images.unsplash.com/photo-1561377455-190afb395ed7?w=500&h=700&fit=crop&auto=format",
+      image: PUBLIC_IMAGES[3],
     },
     {
       id: "s4",
       name: "Geométrico",
       desc: "Precisão, equilíbrio e contraste.",
-      image:
-        "https://images.unsplash.com/photo-1714996073606-576df88a10ef?w=500&h=700&fit=crop&auto=format",
+      image: PUBLIC_IMAGES[4],
     },
     {
       id: "s5",
       name: "Preto e Cinza",
       desc: "Profundidade, textura e sutileza.",
-      image:
-        "https://images.unsplash.com/photo-1635527948959-1b47e7903cb9?w=500&h=700&fit=crop&auto=format",
+      image: PUBLIC_IMAGES[5],
     },
     {
       id: "s6",
       name: "Neo Tradicional",
       desc: "Cores marcantes e personalidade.",
-      image:
-        "https://images.unsplash.com/photo-1706300367311-6721c63ff826?w=500&h=700&fit=crop&auto=format",
+      image: PUBLIC_IMAGES[6],
     },
     {
       id: "s7",
       name: "Suminagashi",
       desc: "Fluxo, movimento e composições orgânicas.",
-      image:
-        "https://images.unsplash.com/photo-1586243287039-23f4c8e2e7ab?w=500&h=700&fit=crop&auto=format",
+      image: PUBLIC_IMAGES[7],
     },
     {
       id: "s8",
       name: "Anime",
       desc: "Referências da cultura pop traduzidas para a linguagem da tatuagem.",
-      image:
-        "https://images.unsplash.com/photo-1759096326551-9ad3745f0431?w=500&h=700&fit=crop&auto=format",
+      image: PUBLIC_IMAGES[8],
     },
   ],
   scale: {
@@ -597,22 +612,22 @@ const DEFAULT: SiteContent = {
     images: [
       {
         id: "g1",
-        src: "https://images.unsplash.com/photo-1540174053853-1cc5d1fa8814?w=600&h=900&fit=crop&auto=format",
+        src: PUBLIC_IMAGES[9],
         alt: "Tatuagem nas costas",
       },
       {
         id: "g2",
-        src: "https://images.unsplash.com/photo-1759247943094-38c725526a5d?w=600&h=900&fit=crop&auto=format",
+        src: PUBLIC_IMAGES[10],
         alt: "Fechamento de costas",
       },
       {
         id: "g3",
-        src: "https://images.unsplash.com/photo-1566485763217-b5dfcc375a09?w=600&h=900&fit=crop&auto=format",
+        src: PUBLIC_IMAGES[11],
         alt: "Composição blackwork",
       },
       {
         id: "g4",
-        src: "https://images.unsplash.com/photo-1561377455-190afb395ed7?w=600&h=900&fit=crop&auto=format",
+        src: PUBLIC_IMAGES[12],
         alt: "Projeto ornamental",
       },
     ],
@@ -684,71 +699,61 @@ const DEFAULT: SiteContent = {
   flashCards: [
     {
       id: "f01",
-      image:
-        "https://images.unsplash.com/photo-1640202352521-66c98a02e612?w=540&h=960&fit=crop&auto=format",
+      image: PUBLIC_IMAGES[13],
       description: "Blackwork geométrico — braço",
       price: "R$ 450",
     },
     {
       id: "f02",
-      image:
-        "https://images.unsplash.com/photo-1566485763217-b5dfcc375a09?w=540&h=960&fit=crop&auto=format",
+      image: PUBLIC_IMAGES[14],
       description: "Ornamental mandala — costela",
       price: "R$ 600",
     },
     {
       id: "f03",
-      image:
-        "https://images.unsplash.com/photo-1561377455-190afb395ed7?w=540&h=960&fit=crop&auto=format",
+      image: PUBLIC_IMAGES[15],
       description: "Tribal perna completa",
       price: "Consultar",
     },
     {
       id: "f04",
-      image:
-        "https://images.unsplash.com/photo-1714996073606-576df88a10ef?w=540&h=960&fit=crop&auto=format",
+      image: PUBLIC_IMAGES[16],
       description: "Dragão blackwork — antebraço",
       price: "R$ 550",
     },
     {
       id: "f05",
-      image:
-        "https://images.unsplash.com/photo-1635527948959-1b47e7903cb9?w=540&h=960&fit=crop&auto=format",
+      image: PUBLIC_IMAGES[17],
       description: "Retrato em preto e cinza",
       price: "R$ 800",
     },
     {
       id: "f06",
-      image:
-        "https://images.unsplash.com/photo-1706300367311-6721c63ff826?w=540&h=960&fit=crop&auto=format",
+      image: PUBLIC_IMAGES[18],
       description: "Floral neo tradicional",
       price: "R$ 380",
     },
     {
       id: "f07",
-      image:
-        "https://images.unsplash.com/photo-1586243287039-23f4c8e2e7ab?w=540&h=960&fit=crop&auto=format",
+      image: PUBLIC_IMAGES[19],
       description: "Suminagashi — costas",
       price: "Consultar",
     },
     {
       id: "f08",
-      image:
-        "https://images.unsplash.com/photo-1759096326551-9ad3745f0431?w=540&h=960&fit=crop&auto=format",
+      image: PUBLIC_IMAGES[20],
       description: "Anime — personagem autoral",
       price: "R$ 420",
     },
     {
       id: "f09",
-      image:
-        "https://images.unsplash.com/photo-1540174053853-1cc5d1fa8814?w=540&h=960&fit=crop&auto=format",
+      image: PUBLIC_IMAGES[21],
       description: "Anjo blackwork — costas",
       price: "Consultar",
     },
     {
       id: "f10",
-      image:
-        "https://images.unsplash.com/photo-1759247943094-38c725526a5d?w=540&h=960&fit=crop&auto=format",
+      image: PUBLIC_IMAGES[1],
       description: "Fechamento — costas completo",
       price: "Consultar",
     },
@@ -756,17 +761,17 @@ const DEFAULT: SiteContent = {
   instagramPosts: [
     {
       id: "ig1",
-      src: "https://images.unsplash.com/photo-1640202352521-66c98a02e612?w=600&h=600&fit=crop&auto=format",
+      src: PUBLIC_IMAGES[19],
       alt: "Postagem Instagram 1",
     },
     {
       id: "ig2",
-      src: "https://images.unsplash.com/photo-1566485763217-b5dfcc375a09?w=600&h=600&fit=crop&auto=format",
+      src: PUBLIC_IMAGES[20],
       alt: "Postagem Instagram 2",
     },
     {
       id: "ig3",
-      src: "https://images.unsplash.com/photo-1561377455-190afb395ed7?w=600&h=600&fit=crop&auto=format",
+      src: PUBLIC_IMAGES[21],
       alt: "Postagem Instagram 3",
     },
   ],
@@ -970,7 +975,7 @@ const DEFAULTS: Record<Lang, SiteContent> = {
 
 // ─── Storage ──────────────────────────────────────────────────────────────────
 
-const STORAGE_KEY = "isis_site_v2";
+const STORAGE_KEY = "isis_site_v3";
 const PLACEHOLDER_UPLOAD_IMAGE = "/placeholder-upload.svg";
 
 function storageKeyFor(lang: Lang): string {
@@ -2099,18 +2104,11 @@ function WaLink({
 // ─── App ──────────────────────────────────────────────────────────────────────
 
 export default function App() {
-  const lastF8ToggleAt = useRef(0);
-  const f8PressCount = useRef(0);
-  const f8WindowStartedAt = useRef(0);
-  const ENABLE_LOCAL_EDIT_SHORTCUT =
-    import.meta.env.DEV &&
-    import.meta.env.VITE_ENABLE_LOCAL_EDIT_SHORTCUT === "true";
-
   const [lang, setLang] = useState<Lang>(
     () => (localStorage.getItem("site_lang") as Lang) ?? "pt",
   );
   const [content, setContent] = useState<SiteContent>(() => loadContent(lang));
-  const [editMode, setEditMode] = useState(false);
+  const editMode = false;
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [focusedId, setFocusedId] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
@@ -2168,71 +2166,6 @@ export default function App() {
       el.removeEventListener("touchend", resume);
     };
   }, []);
-
-  // F8 → 5x para entrar no modo edição, 1x para sair
-  useEffect(() => {
-    if (!ENABLE_LOCAL_EDIT_SHORTCUT) return;
-
-    const F8_ENTER_COUNT = 5;
-    const F8_ENTER_WINDOW_MS = 4000;
-
-    const resetF8Guard = () => {
-      f8PressCount.current = 0;
-      f8WindowStartedAt.current = 0;
-    };
-
-    const fn = (e: KeyboardEvent) => {
-      if (e.key !== "F8") return;
-      e.preventDefault();
-      e.stopPropagation();
-      if (e.repeat) return;
-
-      const now = Date.now();
-      if (now - lastF8ToggleAt.current < 250) return;
-      lastF8ToggleAt.current = now;
-
-      const target = e.target as HTMLElement | null;
-      if (
-        target &&
-        (target.isContentEditable ||
-          target.tagName === "INPUT" ||
-          target.tagName === "TEXTAREA")
-      ) {
-        return;
-      }
-
-      if (editMode) {
-        setEditMode(false);
-        setSettingsOpen(false);
-        setFocusedId(null);
-        resetF8Guard();
-        return;
-      }
-
-      if (
-        !f8WindowStartedAt.current ||
-        now - f8WindowStartedAt.current > F8_ENTER_WINDOW_MS
-      ) {
-        f8WindowStartedAt.current = now;
-        f8PressCount.current = 0;
-      }
-
-      f8PressCount.current += 1;
-      const remaining = F8_ENTER_COUNT - f8PressCount.current;
-
-      if (remaining > 0) {
-        toast.info(`${t.press_f8_more} ${remaining}x ${t.to_enter_edit_mode}`);
-        return;
-      }
-
-      setEditMode(true);
-      setSettingsOpen(false);
-      setFocusedId(null);
-      resetF8Guard();
-    };
-    window.addEventListener("keydown", fn);
-    return () => window.removeEventListener("keydown", fn);
-  }, [editMode, ENABLE_LOCAL_EDIT_SHORTCUT]);
 
   // Auto-save only when content changes.
   // (If we also depend on `lang`, switching language can save stale content
