@@ -514,7 +514,7 @@ const DEFAULT: SiteContent = {
   textStyles: {},
   stats: [
     { id: "st1", value: "10+", label: "anos de carreira" },
-    { id: "st2", value: "10.000+", label: "projetos realizados" },
+    { id: "st2", value: "10000+", label: "projetos realizados" },
     { id: "st3", value: "12", label: "estados atendidos" },
     { id: "st4", value: "8", label: "estilos dominados" },
   ],
@@ -1061,7 +1061,10 @@ function mergeWithDefaults(
     textStyles: parsed.textStyles ?? {},
     instagramPosts: parsed.instagramPosts ?? defaults.instagramPosts,
     flashCards: parsed.flashCards ?? defaults.flashCards,
-    stats: parsed.stats ?? defaults.stats,
+    stats: (parsed.stats ?? defaults.stats).map((stat, index) => ({
+      ...stat,
+      value: index === 1 ? "10000+" : index === 2 ? "12" : stat.value,
+    })),
     faq: parsed.faq ?? defaults.faq,
     aftercare: parsed.aftercare ?? defaults.aftercare,
   };
@@ -2985,26 +2988,6 @@ export default function App() {
                   )}
                 </div>
 
-                {/* Description */}
-                <div
-                  className={`pt-3 pb-1 flex flex-col gap-2 ${editMode ? "ring-1 ring-inset ring-transparent hover:ring-border/50 px-1" : ""}`}
-                >
-                  {/* Description */}
-                  <EditableText
-                    id={`fl.${card.id}.desc`}
-                    value={card.description}
-                    onChange={(v) =>
-                      setDeep(["flashCards", i, "description"], v)
-                    }
-                    editMode={editMode}
-                    onFocused={setFocusedId}
-                    onBlurred={() => setFocusedId(null)}
-                    inlineStyle={gStyle(`fl.${card.id}.desc`)}
-                    className="text-xs text-foreground/80 leading-snug block"
-                    as="p"
-                  />
-
-                </div>
               </div>
             ))}
 
