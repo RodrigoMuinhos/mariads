@@ -3958,16 +3958,13 @@ export default function App() {
               © {new Date().getFullYear()} {content.hero.title}{" "}
               {content.hero.titleItalic} · {t.footer_rights}
             </p>
-            <button
-              onClick={() => {
-                localStorage.removeItem("cookie_consent");
-                window.location.reload();
-              }}
+            <a
+              href="/politica-de-privacidade"
               className="text-[10px] text-muted-foreground/40 tracking-wider hover:text-muted-foreground transition-colors flex items-center gap-1"
-              title={t.manage_cookies}
+              title={t.cookie_policy}
             >
               <Shield size={9} /> {lang === "pt" ? "Privacidade" : "Privacy"}
-            </button>
+            </a>
           </div>
           {/* Lang + theme micro-toggles */}
           <div className="flex items-center gap-4">

@@ -32,6 +32,8 @@ async function renderPage() {
   const { default: Page } =
     normalizedPath === "/tatuadora-fortaleza"
       ? await import("./app/LocalSeoPage.tsx")
+      : normalizedPath === "/politica-de-privacidade"
+        ? await import("./app/PrivacyPolicyPage.tsx")
       : await import("./app/App.tsx");
 
   createRoot(document.getElementById("root")!).render(<Page />);

@@ -9,6 +9,10 @@
       "destination": "/tatuadora-fortaleza/index.html"
     },
     {
+      "source": "/politica-de-privacidade",
+      "destination": "/politica-de-privacidade/index.html"
+    },
+    {
       "source": "/sobre",
       "destination": "/index.html"
     },

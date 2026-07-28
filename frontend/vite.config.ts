@@ -41,6 +41,10 @@ export default defineConfig({
           __dirname,
           'tatuadora-fortaleza/index.html',
         ),
+        politicaDePrivacidade: path.resolve(
+          __dirname,
+          'politica-de-privacidade/index.html',
+        ),
       },
     },
   },
