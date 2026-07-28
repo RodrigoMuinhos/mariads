@@ -1,4 +1,4 @@
-# Website para Tatuadora Ísis Mariana
+# Website para Tatuadora Isis Mariana
 
 Projeto do site com:
 
