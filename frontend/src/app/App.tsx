@@ -2517,12 +2517,12 @@ export default function App() {
         {menuOpen && (
           <div className="lg:hidden border-t border-border bg-background/97 px-5 py-5 flex flex-col gap-1">
             {[
-              [t.nav_about, "#sobre"],
-              [t.nav_styles, "#estilos"],
-              [t.flash_label, "#flash"],
-              [t.nav_scale, "#escala"],
-              [t.nav_process, "#processo"],
-              [t.nav_testimonials, "#depoimentos"],
+              [t.nav_about, "/sobre"],
+              [t.nav_styles, "/estilos"],
+              [t.flash_label, "/flash-desenhos"],
+              [t.nav_scale, "/projetos-grande-escala"],
+              [t.nav_process, "/como-funciona"],
+              [t.nav_testimonials, "/depoimentos"],
             ].map(([l, h]) => (
               <a
                 key={h}
@@ -3336,7 +3336,10 @@ export default function App() {
       </section>
 
       {/* ── FAQ ─────────────────────────────────────────────────────────── */}
-      <section className="py-20 lg:py-36 px-5 lg:px-20 border-t border-border bg-card">
+      <section
+        id="duvidas"
+        className="py-20 lg:py-36 px-5 lg:px-20 border-t border-border bg-card scroll-mt-14"
+      >
         <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-12 lg:gap-16">
           <div className="lg:col-span-4">
             <div className="mb-5">
@@ -3680,7 +3683,10 @@ export default function App() {
       </section>
 
       {/* ── CTA FINAL ───────────────────────────────────────────────────── */}
-      <section className="relative py-28 lg:py-48 px-5 lg:px-20 border-t border-border bg-card overflow-hidden">
+      <section
+        id="orcamento"
+        className="relative py-28 lg:py-48 px-5 lg:px-20 border-t border-border bg-card overflow-hidden scroll-mt-14"
+      >
         <div
           className="absolute inset-0 opacity-[0.06] pointer-events-none"
           aria-hidden
@@ -3730,7 +3736,10 @@ export default function App() {
       </section>
 
       {/* ── INSTAGRAM CAROUSEL ──────────────────────────────────────────── */}
-      <section className="py-16 lg:py-24 px-5 lg:px-20 border-t border-border">
+      <section
+        id="instagram"
+        className="py-16 lg:py-24 px-5 lg:px-20 border-t border-border scroll-mt-14"
+      >
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="flex items-center justify-between mb-8">
@@ -3903,12 +3912,12 @@ export default function App() {
                     : "Tattoo artist in Fortaleza",
                   "/tatuadora-fortaleza",
                 ],
-                [t.nav_about, "#sobre"],
-                [t.nav_styles, "#estilos"],
-                [t.flash_label, "#flash"],
-                [t.nav_scale, "#escala"],
-                [t.nav_process, "#processo"],
-                [t.nav_testimonials, "#depoimentos"],
+                [t.nav_about, "/sobre"],
+                [t.nav_styles, "/estilos"],
+                [t.flash_label, "/flash-desenhos"],
+                [t.nav_scale, "/projetos-grande-escala"],
+                [t.nav_process, "/como-funciona"],
+                [t.nav_testimonials, "/depoimentos"],
               ].map(([label, href]) => (
                 <a
                   key={href}

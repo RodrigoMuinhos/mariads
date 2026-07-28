@@ -7,6 +7,50 @@
     {
       "source": "/tatuadora-fortaleza",
       "destination": "/tatuadora-fortaleza/index.html"
+    },
+    {
+      "source": "/sobre",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/portfolio",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/estilos",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/flash-desenhos",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/projetos-grande-escala",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/como-funciona",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/duvidas",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/cuidados",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/depoimentos",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/orcamento",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/instagram",
+      "destination": "/index.html"
     }
   ],
   "headers": [
