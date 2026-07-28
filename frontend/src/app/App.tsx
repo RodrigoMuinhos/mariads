@@ -86,8 +86,8 @@ const T = {
     flash_label: "Flash & Desenhos",
     flash_sec: "Disponíveis",
     flash_desc_ph: "Descrição do desenho",
-    flash_price_ph: "Valor",
-    flash_cta: "Tenho interesse",
+    flash_price_ph: "Consultar",
+    flash_cta: "Consultar no WhatsApp",
     flash_add: "+ Adicionar desenho",
     flash_drag: "Arraste para reordenar",
     stats_years: "anos de carreira",
@@ -201,8 +201,8 @@ const T = {
     flash_label: "Flash & Designs",
     flash_sec: "Available",
     flash_desc_ph: "Design description",
-    flash_price_ph: "Price",
-    flash_cta: "I'm interested",
+    flash_price_ph: "Contact us",
+    flash_cta: "Ask on WhatsApp",
     flash_add: "+ Add design",
     flash_drag: "Drag to reorder",
     stats_years: "years of experience",
@@ -514,8 +514,8 @@ const DEFAULT: SiteContent = {
   textStyles: {},
   stats: [
     { id: "st1", value: "10+", label: "anos de carreira" },
-    { id: "st2", value: "500+", label: "projetos realizados" },
-    { id: "st3", value: "8", label: "estados atendidos" },
+    { id: "st2", value: "10.000+", label: "projetos realizados" },
+    { id: "st3", value: "12", label: "estados atendidos" },
     { id: "st4", value: "8", label: "estilos dominados" },
   ],
   faq: [
@@ -574,7 +574,7 @@ const DEFAULT: SiteContent = {
   ],
   hero: {
     badge: "Tatuadora · Fortaleza, CE",
-    title: "Ísis",
+    title: "Isis",
     titleItalic: "Mariana",
     subtitle: "Tatuagens autorais em Fortaleza",
     specialty:
@@ -584,7 +584,7 @@ const DEFAULT: SiteContent = {
   },
   about: {
     headline:
-      "Com mais de 10 anos de carreira, Ísis Mariana desenvolve projetos autorais que unem técnica, composição e identidade visual.",
+      "Com mais de 10 anos de carreira, Isis Mariana desenvolve projetos autorais que unem técnica, composição e identidade visual.",
     body: "Atendendo em Fortaleza e também em outros estados através de guest spots e eventos, seu trabalho é voltado para clientes que buscam projetos personalizados e de longa duração.",
     ctaLabel: "Falar no WhatsApp",
   },
@@ -886,7 +886,7 @@ const DEFAULT_EN: SiteContent = {
   },
   about: {
     headline:
-      "With over 10 years of experience, Ísis Mariana creates original projects that combine technique, composition, and visual identity.",
+      "With over 10 years of experience, Isis Mariana creates original projects that combine technique, composition, and visual identity.",
     body: "Based in Fortaleza and also working in other states through guest spots and events, her work is focused on clients seeking personalized, long-lasting projects.",
     ctaLabel: "Talk on WhatsApp",
   },
@@ -1478,9 +1478,17 @@ function EditableImage({
 }) {
   const fileRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
+  const isHeroImage = alt === "Portfólio de Isis Mariana Tattoo em Fortaleza";
   return (
     <div className={`relative group/img ${className ?? ""}`}>
-      <img src={src} alt={alt} className={imgClassName} />
+      <img
+        src={src}
+        alt={alt}
+        className={imgClassName}
+        loading={isHeroImage ? "eager" : "lazy"}
+        fetchPriority={isHeroImage ? "high" : "auto"}
+        decoding="async"
+      />
       {children}
       {editMode && (
         <div
@@ -1928,7 +1936,7 @@ function CookieBanner({
                       1. Responsável pelos dados
                     </strong>
                     <br />
-                    Ísis Mariana, tatuadora profissional com sede em Fortaleza,
+                    Isis Mariana, tatuadora profissional com sede em Fortaleza,
                     CE, Brasil. Contato: via WhatsApp ou Instagram indicados
                     neste site.
                   </p>
@@ -1998,7 +2006,7 @@ function CookieBanner({
                       1. Data controller
                     </strong>
                     <br />
-                    Ísis Mariana, professional tattoo artist based in Fortaleza,
+                    Isis Mariana, professional tattoo artist based in Fortaleza,
                     CE, Brazil. Contact: WhatsApp or Instagram listed on this
                     website.
                   </p>
@@ -2126,6 +2134,7 @@ function WaLink({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
+      data-analytics-event="whatsapp_budget_click"
       className={className}
     >
       <MessageCircle size={14} />
@@ -2451,9 +2460,11 @@ export default function App() {
       />
 
       {/* ── NAV ─────────────────────────────────────────────────────────── */}
-      <nav
-        className={`fixed inset-x-0 z-50 transition-all duration-300 ${navTop} ${scrolled || menuOpen ? "bg-background/97 backdrop-blur-md border-b border-border" : "bg-transparent"}`}
-      >
+      <header>
+        <nav
+          aria-label="Navegação principal"
+          className={`fixed inset-x-0 z-50 transition-all duration-300 ${navTop} ${scrolled || menuOpen ? "bg-background/97 backdrop-blur-md border-b border-border" : "bg-transparent"}`}
+        >
         <div className="flex items-center justify-between h-14 px-5 lg:px-12 max-w-7xl mx-auto">
           <span
             className="text-sm tracking-[0.2em] uppercase"
@@ -2532,14 +2543,16 @@ export default function App() {
             </div>
           </div>
         )}
-      </nav>
+        </nav>
+      </header>
 
       {/* ── HERO ────────────────────────────────────────────────────────── */}
+      <main>
       <section className={`min-h-[100svh] flex flex-col ${editorOffset}`}>
         {/* Mobile image */}
         {EI(
           content.hero.image,
-          "Hero",
+          "Portfólio de Isis Mariana Tattoo em Fortaleza",
           (file) =>
             uploadAndSetImage(
               file,
@@ -2560,7 +2573,7 @@ export default function App() {
           <div className="absolute inset-y-0 right-0 w-[52%] bg-[#181817] overflow-hidden">
             {EI(
               content.hero.image,
-              "Hero",
+              "Portfólio de Isis Mariana Tattoo em Fortaleza",
               (file) =>
                 uploadAndSetImage(
                   file,
@@ -2584,7 +2597,7 @@ export default function App() {
             "text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-5 block",
           )}
 
-          <div
+          <h1
             className="mb-6"
             style={{
               fontSize: "clamp(3.4rem,14vw,7.5rem)",
@@ -2592,6 +2605,9 @@ export default function App() {
               lineHeight: 0.88,
             }}
           >
+            <span className="sr-only">
+              Tatuadora em Fortaleza — Isis Mariana Tattoo
+            </span>
             {ET(
               "hero.title",
               content.hero.title,
@@ -2604,7 +2620,7 @@ export default function App() {
               (v) => setDeep(["hero", "titleItalic"], v),
               "italic block leading-[0.88] tracking-tight text-foreground",
             )}
-          </div>
+          </h1>
 
           <div className="w-10 h-px bg-primary mb-6" />
           {ET(
@@ -2937,7 +2953,7 @@ export default function App() {
                   {/* Interest CTA on hover — not in edit mode */}
                   {!editMode && (
                     <a
-                      href={`${WA_LINK.split("?")[0]}?text=${encodeURIComponent(`Olá! Tenho interesse no desenho: "${card.description}". Preço: ${card.price}`)}`}
+                      href={`${WA_LINK.split("?")[0]}?text=${encodeURIComponent(`Olá! Gostaria de consultar este desenho: "${card.description}".`)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="absolute inset-x-0 bottom-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-primary text-primary-foreground text-[10px] tracking-[0.15em] uppercase flex items-center justify-center gap-2 h-10 z-10"
@@ -2969,7 +2985,7 @@ export default function App() {
                   )}
                 </div>
 
-                {/* Description + Price */}
+                {/* Description */}
                 <div
                   className={`pt-3 pb-1 flex flex-col gap-2 ${editMode ? "ring-1 ring-inset ring-transparent hover:ring-border/50 px-1" : ""}`}
                 >
@@ -2988,24 +3004,6 @@ export default function App() {
                     as="p"
                   />
 
-                  {/* Price badge */}
-                  <div className="flex items-center gap-2">
-                    <EditableText
-                      id={`fl.${card.id}.price`}
-                      value={card.price}
-                      onChange={(v) => setDeep(["flashCards", i, "price"], v)}
-                      editMode={editMode}
-                      onFocused={setFocusedId}
-                      onBlurred={() => setFocusedId(null)}
-                      inlineStyle={gStyle(`fl.${card.id}.price`)}
-                      className={`text-[11px] font-medium tracking-wide px-2 py-0.5 inline-block ${
-                        card.price.toLowerCase().includes("consul")
-                          ? "text-muted-foreground border border-border"
-                          : "text-primary border border-primary/40 bg-primary/8"
-                      }`}
-                      as="span"
-                    />
-                  </div>
                 </div>
               </div>
             ))}
@@ -3476,7 +3474,10 @@ export default function App() {
       </section>
 
       {/* ── CUIDADOS PÓS-TATUAGEM ────────────────────────────────────────── */}
-      <section className="py-20 lg:py-36 px-5 lg:px-20 border-t border-border">
+      <section
+        id="cuidados"
+        className="py-20 lg:py-36 px-5 lg:px-20 border-t border-border scroll-mt-14"
+      >
         <div className="max-w-7xl mx-auto">
           <div className="lg:grid lg:grid-cols-12 lg:gap-16 mb-12">
             <div className="lg:col-span-4 mb-8 lg:mb-0">
@@ -3845,6 +3846,7 @@ export default function App() {
           )}
         </div>
       </section>
+      </main>
 
       {/* ── FOOTER ──────────────────────────────────────────────────────── */}
       <footer className="border-t border-border bg-card">
@@ -3912,6 +3914,12 @@ export default function App() {
             </p>
             <nav className="flex flex-col gap-2.5">
               {[
+                [
+                  lang === "pt"
+                    ? "Tatuadora em Fortaleza"
+                    : "Tattoo artist in Fortaleza",
+                  "/tatuadora-fortaleza",
+                ],
                 [t.nav_about, "#sobre"],
                 [t.nav_styles, "#estilos"],
                 [t.flash_label, "#flash"],

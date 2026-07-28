@@ -1,6 +1,6 @@
-# Website — Ísis Mariana Tattoo
+# Website — Isis Mariana Tattoo
 
-Criar um website moderno, elegante, responsivo e focado em conversão para a tatuadora **Ísis Mariana**.
+Criar um website moderno, elegante, responsivo e focado em conversão para a tatuadora **Isis Mariana**.
 
 O objetivo principal do site é transformar visitantes em contatos pelo WhatsApp, facilitando a solicitação de orçamento para projetos de tatuagem autoral.
 
@@ -64,7 +64,7 @@ Primeira dobra do site com impacto visual forte.
 **Título:**
 
 ```text
-Ísis Mariana
+Isis Mariana
 ```
 
 **Subtítulo:**
@@ -106,7 +106,7 @@ Sobre
 ### Texto
 
 ```text
-Com mais de 10 anos de carreira, Ísis Mariana desenvolve projetos autorais que unem técnica, composição e identidade visual.
+Com mais de 10 anos de carreira, Isis Mariana desenvolve projetos autorais que unem técnica, composição e identidade visual.
 
 Atendendo em Fortaleza e também em outros estados através de guest spots e eventos, seu trabalho é voltado para clientes que buscam projetos personalizados e de longa duração.
 ```
@@ -356,7 +356,7 @@ Criar um rodapé minimalista, elegante e funcional.
 ### Conteúdo
 
 ```text
-Ísis Mariana
+Isis Mariana
 Fortaleza - CE
 ```
 
