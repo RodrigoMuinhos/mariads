@@ -21,6 +21,22 @@
         currency: "BRL",
       });
     </script>
+    <script>
+      function gtag_report_conversion(url) {
+        var callback = function () {
+          if (typeof url != "undefined") {
+            window.location = url;
+          }
+        };
+        gtag("event", "conversion", {
+          send_to: "AW-18239209721/TDqvCJvz_b4cEPmBkflD",
+          value: 1.0,
+          currency: "BRL",
+          event_callback: callback,
+        });
+        return false;
+      }
+    </script>
     <title>Tatuadora em Fortaleza | Orçamentos e Portfólio</title>
     <meta name="application-name" content="Isis Mariana Tattoo" />
     <meta name="author" content="Isis Mariana Tattoo" />

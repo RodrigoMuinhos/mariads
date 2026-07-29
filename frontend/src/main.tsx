@@ -2,6 +2,12 @@
 import { createRoot } from "react-dom/client";
 import "./styles/index.css";
 
+declare global {
+  interface Window {
+    gtag_report_conversion?: (url?: string) => boolean;
+  }
+}
+
 const normalizedPath = window.location.pathname.replace(/\/+$/, "") || "/";
 const sectionRoutes: Record<string, string> = {
   "/sobre": "sobre",
@@ -16,6 +22,16 @@ const sectionRoutes: Record<string, string> = {
   "/orcamento": "orcamento",
   "/instagram": "instagram",
 };
+
+document.addEventListener("click", (event) => {
+  const element = event.target;
+  if (
+    element instanceof Element &&
+    element.closest<HTMLAnchorElement>('a[href*="wa.me"]')
+  ) {
+    window.gtag_report_conversion?.();
+  }
+});
 
 function scrollToRequestedSection() {
   const sectionId = sectionRoutes[normalizedPath];
