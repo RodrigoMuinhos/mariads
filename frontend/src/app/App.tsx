@@ -387,9 +387,23 @@ interface SiteContent {
   footer: { tagline: string };
 }
 
-const API_BASE = (
-  import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8080"
-).replace(/\/$/, "");
+const CONFIGURED_API_BASE = (import.meta.env.VITE_API_BASE_URL ?? "").replace(
+  /\/$/,
+  "",
+);
+const API_BASE = (() => {
+  if (!import.meta.env.PROD || !CONFIGURED_API_BASE) return CONFIGURED_API_BASE;
+  try {
+    const hostname = new URL(CONFIGURED_API_BASE).hostname;
+    const localHostname = ["local", "host"].join("");
+    const loopbackAddress = ["127", "0", "0", "1"].join(".");
+    return hostname === localHostname || hostname === loopbackAddress
+      ? ""
+      : CONFIGURED_API_BASE;
+  } catch {
+    return CONFIGURED_API_BASE;
+  }
+})();
 const DEFAULT_WA_NUMBER = "5585996327634";
 const DEFAULT_INSTAGRAM_URL = "https://www.instagram.com/isismarianatattoo";
 const PUBLIC_IMAGES = [
@@ -1953,10 +1967,13 @@ function CookieBanner({
 
   const accept = (type: "all" | "essential") => {
     localStorage.setItem("cookie_consent", type);
+    window.gtag?.("consent", "update", {
+      ad_storage: type === "all" ? "granted" : "denied",
+      analytics_storage: type === "all" ? "granted" : "denied",
+      ad_user_data: type === "all" ? "granted" : "denied",
+      ad_personalization: type === "all" ? "granted" : "denied",
+    });
     setVisible(false);
-    if (type === "all") {
-      // Here you would initialize Analytics/Meta Pixel
-    }
   };
 
   return (

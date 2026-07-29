@@ -5,6 +5,7 @@ import "./styles/index.css";
 declare global {
   interface Window {
     gtag_report_conversion?: (url?: string) => boolean;
+    gtag?: (...args: unknown[]) => void;
   }
 }
 
@@ -22,6 +23,15 @@ const sectionRoutes: Record<string, string> = {
   "/orcamento": "orcamento",
   "/instagram": "instagram",
 };
+
+if (localStorage.getItem("cookie_consent") === "all") {
+  window.gtag?.("consent", "update", {
+    ad_storage: "granted",
+    analytics_storage: "granted",
+    ad_user_data: "granted",
+    ad_personalization: "granted",
+  });
+}
 
 document.addEventListener("click", (event) => {
   const element = event.target;

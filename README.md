@@ -9,6 +9,32 @@ Projeto do site com:
 
 ---
 
+## SEO e Google Search Console
+
+O domínio canônico do projeto é `https://www.isismariana.com.br`. Durante o
+build, `frontend/scripts/generate-seo.mjs` gera as entradas HTML das seções e o
+`sitemap.xml` a partir da configuração central em
+`frontend/scripts/seo-routes.mjs`.
+
+Para verificar o site no Google Search Console:
+
+1. Crie a variável `VITE_GOOGLE_SITE_VERIFICATION` na Vercel usando somente o
+   código fornecido pelo Google, sem a tag HTML completa.
+2. Faça um novo deploy e confirme que a meta tag
+   `google-site-verification` aparece no HTML publicado.
+3. Adicione e valide a propriedade de domínio no Search Console. Para validação
+   por domínio, o Google também pode solicitar um registro TXT no DNS.
+4. Envie `https://www.isismariana.com.br/sitemap.xml`.
+5. Use a inspeção de URL para solicitar indexação da página inicial e das
+   páginas públicas prioritárias.
+6. Consulte periodicamente as páginas excluídas e os relatórios de indexação
+   para identificar canonical divergente, bloqueio ou erro de rastreamento.
+
+Não coloque tokens, senhas ou credenciais em variáveis com prefixo `VITE_`.
+Esse prefixo torna o valor público no frontend.
+
+---
+
 ## Como rodar o frontend
 
 1. Entre na pasta `frontend`.

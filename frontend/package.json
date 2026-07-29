@@ -7,8 +7,9 @@
     "node": ">=18"
   },
   "scripts": {
-    "build": "vite build",
-    "dev": "vite"
+    "generate:seo": "node scripts/generate-seo.mjs",
+    "build": "npm run generate:seo && vite build",
+    "dev": "npm run generate:seo && vite"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",

@@ -14,47 +14,47 @@
     },
     {
       "source": "/sobre",
-      "destination": "/index.html"
+      "destination": "/sobre/index.html"
     },
     {
       "source": "/portfolio",
-      "destination": "/index.html"
+      "destination": "/portfolio/index.html"
     },
     {
       "source": "/estilos",
-      "destination": "/index.html"
+      "destination": "/estilos/index.html"
     },
     {
       "source": "/flash-desenhos",
-      "destination": "/index.html"
+      "destination": "/flash-desenhos/index.html"
     },
     {
       "source": "/projetos-grande-escala",
-      "destination": "/index.html"
+      "destination": "/projetos-grande-escala/index.html"
     },
     {
       "source": "/como-funciona",
-      "destination": "/index.html"
+      "destination": "/como-funciona/index.html"
     },
     {
       "source": "/duvidas",
-      "destination": "/index.html"
+      "destination": "/duvidas/index.html"
     },
     {
       "source": "/cuidados",
-      "destination": "/index.html"
+      "destination": "/cuidados/index.html"
     },
     {
       "source": "/depoimentos",
-      "destination": "/index.html"
+      "destination": "/depoimentos/index.html"
     },
     {
       "source": "/orcamento",
-      "destination": "/index.html"
+      "destination": "/orcamento/index.html"
     },
     {
       "source": "/instagram",
-      "destination": "/index.html"
+      "destination": "/instagram/index.html"
     }
   ],
   "headers": [

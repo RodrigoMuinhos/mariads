@@ -44,3 +44,15 @@ desktop.ini
 *.temp
 *.swp
 *.swo
+# Páginas HTML de seções geradas antes do build
+frontend/sobre/
+frontend/portfolio/
+frontend/estilos/
+frontend/flash-desenhos/
+frontend/projetos-grande-escala/
+frontend/como-funciona/
+frontend/duvidas/
+frontend/cuidados/
+frontend/depoimentos/
+frontend/orcamento/
+frontend/instagram/
