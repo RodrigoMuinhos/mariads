@@ -106,7 +106,7 @@ Sobre
 ### Texto
 
 ```text
-Com mais de 10 anos de carreira, Isis Mariana desenvolve projetos autorais que unem técnica, composição e identidade visual.
+Com mais de 10 anos de carreira, desenvolvo projetos autorais que unem técnica, composição e identidade visual.
 
 Atendendo em Fortaleza e também em outros estados através de guest spots e eventos, seu trabalho é voltado para clientes que buscam projetos personalizados e de longa duração.
 ```

@@ -584,7 +584,7 @@ const DEFAULT: SiteContent = {
   },
   about: {
     headline:
-      "Com mais de 10 anos de carreira, Isis Mariana desenvolve projetos autorais que unem técnica, composição e identidade visual.",
+      "Com mais de 10 anos de carreira, desenvolvo projetos autorais que unem técnica, composição e identidade visual.",
     body: "Atendendo em Fortaleza e também em outros estados através de guest spots e eventos, seu trabalho é voltado para clientes que buscam projetos personalizados e de longa duração.",
     ctaLabel: "Falar no WhatsApp",
   },
@@ -1065,6 +1065,14 @@ function mergeWithDefaults(
       ...stat,
       value: index === 1 ? "10000+" : index === 2 ? "12" : stat.value,
     })),
+    about: {
+      ...(parsed.about ?? defaults.about),
+      headline:
+        parsed.about?.headline ===
+        "Com mais de 10 anos de carreira, Isis Mariana desenvolve projetos autorais que unem técnica, composição e identidade visual."
+          ? "Com mais de 10 anos de carreira, desenvolvo projetos autorais que unem técnica, composição e identidade visual."
+          : (parsed.about?.headline ?? defaults.about.headline),
+    },
     faq: parsed.faq ?? defaults.faq,
     aftercare: parsed.aftercare ?? defaults.aftercare,
   };
