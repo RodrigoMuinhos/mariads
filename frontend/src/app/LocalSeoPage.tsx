@@ -51,7 +51,7 @@ const faqs = [
   {
     question: "Como funciona a criação de um projeto personalizado?",
     answer:
-      "A proposta é desenvolvida a partir das referências, do estilo desejado e das características informadas para o projeto.",
+      "Desenvolvo a proposta a partir das referências, do estilo desejado e das características informadas para o projeto.",
   },
   {
     question: "Onde acontece o atendimento?",
@@ -66,17 +66,17 @@ const faqs = [
   {
     question: "Como escolher o tamanho e o local da tatuagem?",
     answer:
-      "Tamanho e posicionamento são avaliados considerando a composição do desenho e a área do corpo. A definição pode ser alinhada durante o orçamento.",
+      "Avalio tamanho e posicionamento considerando a composição do desenho e a área do corpo. Podemos alinhar a definição durante o orçamento.",
   },
   {
     question: "Como funciona o agendamento?",
     answer:
-      "Após a avaliação do projeto e do orçamento, a disponibilidade para a sessão é combinada diretamente pelo WhatsApp.",
+      "Após avaliar o projeto e o orçamento, combino a disponibilidade para a sessão diretamente pelo WhatsApp.",
   },
   {
     question: "Quais cuidados devo ter antes da sessão?",
     answer:
-      "As orientações adequadas ao projeto são enviadas antes da sessão. Em caso de dúvida, confirme os cuidados diretamente pelo WhatsApp.",
+      "Envio as orientações adequadas ao projeto antes da sessão. Em caso de dúvida, confirme os cuidados diretamente comigo pelo WhatsApp.",
   },
 ];
 
@@ -179,8 +179,8 @@ export default function LocalSeoPage() {
                 Tatuadora em Fortaleza — Isis Mariana Tattoo
               </h1>
               <p className="mt-7 max-w-xl text-base leading-relaxed text-muted-foreground">
-                Projetos autorais e personalizados desenvolvidos a partir da
-                sua ideia, com atendimento individual e orçamento solicitado
+                Desenvolvo projetos autorais e personalizados a partir da sua
+                ideia, com atendimento individual e orçamento solicitado
                 diretamente pelo WhatsApp.
               </p>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
@@ -232,16 +232,14 @@ export default function LocalSeoPage() {
             </div>
             <div className="space-y-5 text-sm leading-loose text-muted-foreground lg:col-span-7">
               <p>
-                Isis Mariana atua em Fortaleza desenvolvendo composições
-                pensadas para cada pessoa. O processo considera referências,
-                região do corpo, tamanho e linguagem visual antes da definição
-                do orçamento.
+                Atuo em Fortaleza e desenvolvo composições pensadas para cada
+                pessoa. Considero referências, região do corpo, tamanho e
+                linguagem visual antes de definir o orçamento.
               </p>
               <p>
-                Entre os estilos apresentados no portfólio estão{" "}
-                {styles.join(", ")}. Cada proposta é avaliada individualmente
-                para manter coerência entre desenho, aplicação e resultado
-                visual.
+                No meu portfólio, apresento estilos como{" "}
+                {styles.join(", ")}. Avalio cada proposta individualmente para
+                manter coerência entre desenho, aplicação e resultado visual.
               </p>
             </div>
           </div>
@@ -308,12 +306,12 @@ export default function LocalSeoPage() {
                 [
                   "02",
                   "Avaliação personalizada",
-                  "As informações são analisadas para orientar a proposta e preparar o orçamento.",
+                  "Analiso as informações para orientar a proposta e preparar o orçamento.",
                 ],
                 [
                   "03",
                   "Alinhe o agendamento",
-                  "Depois da aprovação, a disponibilidade e os detalhes da sessão são combinados diretamente.",
+                  "Depois da aprovação, combino diretamente a disponibilidade e os detalhes da sessão.",
                 ],
               ].map(([number, title, text]) => (
                 <article key={number} className="bg-background p-7">
@@ -352,10 +350,10 @@ export default function LocalSeoPage() {
                 Preparação, cuidados e atendimento
               </h2>
               <p className="mt-5 text-sm leading-loose text-muted-foreground">
-                Orientações de preparação e cuidados são alinhadas antes e
-                depois da sessão. Consulte diretamente as recomendações
-                adequadas ao seu projeto e informe qualquer dúvida relevante
-                durante o atendimento.
+                Alinho as orientações de preparação e cuidados antes e depois
+                da sessão. Consulte comigo as recomendações adequadas ao seu
+                projeto e informe qualquer dúvida relevante durante o
+                atendimento.
               </p>
               <a
                 href="/#cuidados"

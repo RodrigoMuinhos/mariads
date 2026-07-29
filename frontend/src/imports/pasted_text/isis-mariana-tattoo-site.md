@@ -108,7 +108,7 @@ Sobre
 ```text
 Com mais de 10 anos de carreira, desenvolvo projetos autorais que unem técnica, composição e identidade visual.
 
-Atendendo em Fortaleza e também em outros estados através de guest spots e eventos, seu trabalho é voltado para clientes que buscam projetos personalizados e de longa duração.
+Atendo em Fortaleza e também em outros estados através de guest spots e eventos. Meu trabalho é voltado para clientes que buscam projetos personalizados e de longa duração.
 ```
 
 ### Botão
@@ -205,7 +205,7 @@ Projetos de Grande Escala
 ### Texto
 
 ```text
-Braços, costas, pernas e composições completas desenvolvidas para acompanhar a anatomia e contar uma história através da tatuagem.
+Desenvolvo projetos para braços, costas, pernas e composições completas que acompanham a anatomia e contam uma história através da tatuagem.
 ```
 
 ### Galeria

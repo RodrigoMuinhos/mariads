@@ -547,7 +547,7 @@ const DEFAULT: SiteContent = {
     {
       id: "fq6",
       q: "Posso parcelar o pagamento?",
-      a: "Sim, trabalhamos com diversas formas de pagamento. Entre em contato para saber as opções disponíveis.",
+      a: "Sim, trabalho com diversas formas de pagamento. Entre em contato para saber as opções disponíveis.",
     },
   ],
   aftercare: [
@@ -585,7 +585,7 @@ const DEFAULT: SiteContent = {
   about: {
     headline:
       "Com mais de 10 anos de carreira, desenvolvo projetos autorais que unem técnica, composição e identidade visual.",
-    body: "Atendendo em Fortaleza e também em outros estados através de guest spots e eventos, seu trabalho é voltado para clientes que buscam projetos personalizados e de longa duração.",
+    body: "Atendo em Fortaleza e também em outros estados através de guest spots e eventos. Meu trabalho é voltado para clientes que buscam projetos personalizados e de longa duração.",
     ctaLabel: "Falar no WhatsApp",
   },
   styles: [
@@ -641,7 +641,7 @@ const DEFAULT: SiteContent = {
   scale: {
     title: "Projetos de",
     titleItalic: "Grande Escala",
-    body: "Braços, costas, pernas e composições completas desenvolvidas para acompanhar a anatomia e contar uma história através da tatuagem.",
+    body: "Desenvolvo projetos para braços, costas, pernas e composições completas que acompanham a anatomia e contam uma história através da tatuagem.",
     ctaLabel: "Quero desenvolver meu projeto",
     images: [
       {
@@ -690,7 +690,7 @@ const DEFAULT: SiteContent = {
         id: "p4",
         num: "04",
         title: "Receber o orçamento",
-        desc: "Você receberá um orçamento detalhado e personalizado para o seu projeto.",
+        desc: "Após analisar as informações, envio um orçamento detalhado e personalizado para o seu projeto.",
       },
       {
         id: "p5",
@@ -852,7 +852,7 @@ const DEFAULT_EN: SiteContent = {
     {
       ...DEFAULT.faq[5],
       q: "Can I pay in installments?",
-      a: "Yes, we offer multiple payment options. Contact us to learn more.",
+      a: "Yes, I offer multiple payment options. Contact me to learn more.",
     },
   ],
   aftercare: [
@@ -886,8 +886,8 @@ const DEFAULT_EN: SiteContent = {
   },
   about: {
     headline:
-      "With over 10 years of experience, Isis Mariana creates original projects that combine technique, composition, and visual identity.",
-    body: "Based in Fortaleza and also working in other states through guest spots and events, her work is focused on clients seeking personalized, long-lasting projects.",
+      "With over 10 years of experience, I create original projects that combine technique, composition, and visual identity.",
+    body: "I work in Fortaleza and in other states through guest spots and events. My work is focused on clients seeking personalized, long-lasting projects.",
     ctaLabel: "Talk on WhatsApp",
   },
   styles: DEFAULT.styles.map((style, i) => ({
@@ -909,7 +909,7 @@ const DEFAULT_EN: SiteContent = {
     ...DEFAULT.scale,
     title: "Large-Scale",
     titleItalic: "Projects",
-    body: "Arms, backs, legs, and full compositions designed to follow anatomy and tell a story through tattooing.",
+    body: "I create projects for arms, backs, legs, and full compositions that follow anatomy and tell a story through tattooing.",
     ctaLabel: "I want to develop my project",
     images: DEFAULT.scale.images.map((img, i) => ({
       ...img,
@@ -1049,6 +1049,29 @@ function sanitizeContentImages(content: SiteContent): SiteContent {
 
 type StoredSiteContent = Partial<SiteContent> & { _lang?: Lang };
 
+const FIRST_PERSON_REPLACEMENTS: Record<string, string> = {
+  "Atendendo em Fortaleza e também em outros estados através de guest spots e eventos, seu trabalho é voltado para clientes que buscam projetos personalizados e de longa duração.":
+    "Atendo em Fortaleza e também em outros estados através de guest spots e eventos. Meu trabalho é voltado para clientes que buscam projetos personalizados e de longa duração.",
+  "Sim, trabalhamos com diversas formas de pagamento. Entre em contato para saber as opções disponíveis.":
+    "Sim, trabalho com diversas formas de pagamento. Entre em contato para saber as opções disponíveis.",
+  "Braços, costas, pernas e composições completas desenvolvidas para acompanhar a anatomia e contar uma história através da tatuagem.":
+    "Desenvolvo projetos para braços, costas, pernas e composições completas que acompanham a anatomia e contam uma história através da tatuagem.",
+  "Você receberá um orçamento detalhado e personalizado para o seu projeto.":
+    "Após analisar as informações, envio um orçamento detalhado e personalizado para o seu projeto.",
+  "Yes, we offer multiple payment options. Contact us to learn more.":
+    "Yes, I offer multiple payment options. Contact me to learn more.",
+  "With over 10 years of experience, Isis Mariana creates original projects that combine technique, composition, and visual identity.":
+    "With over 10 years of experience, I create original projects that combine technique, composition, and visual identity.",
+  "Based in Fortaleza and also working in other states through guest spots and events, her work is focused on clients seeking personalized, long-lasting projects.":
+    "I work in Fortaleza and in other states through guest spots and events. My work is focused on clients seeking personalized, long-lasting projects.",
+  "Arms, backs, legs, and full compositions designed to follow anatomy and tell a story through tattooing.":
+    "I create projects for arms, backs, legs, and full compositions that follow anatomy and tell a story through tattooing.",
+};
+
+function toFirstPerson(value: string): string {
+  return FIRST_PERSON_REPLACEMENTS[value] ?? value;
+}
+
 function mergeWithDefaults(
   defaults: SiteContent,
   parsed: StoredSiteContent,
@@ -1071,9 +1094,26 @@ function mergeWithDefaults(
         parsed.about?.headline ===
         "Com mais de 10 anos de carreira, Isis Mariana desenvolve projetos autorais que unem técnica, composição e identidade visual."
           ? "Com mais de 10 anos de carreira, desenvolvo projetos autorais que unem técnica, composição e identidade visual."
-          : (parsed.about?.headline ?? defaults.about.headline),
+          : toFirstPerson(
+              parsed.about?.headline ?? defaults.about.headline,
+            ),
+      body: toFirstPerson(parsed.about?.body ?? defaults.about.body),
     },
-    faq: parsed.faq ?? defaults.faq,
+    faq: (parsed.faq ?? defaults.faq).map((item) => ({
+      ...item,
+      a: toFirstPerson(item.a),
+    })),
+    scale: {
+      ...(parsed.scale ?? defaults.scale),
+      body: toFirstPerson(parsed.scale?.body ?? defaults.scale.body),
+    },
+    process: {
+      ...(parsed.process ?? defaults.process),
+      steps: (parsed.process?.steps ?? defaults.process.steps).map((step) => ({
+        ...step,
+        desc: toFirstPerson(step.desc),
+      })),
+    },
     aftercare: parsed.aftercare ?? defaults.aftercare,
   };
 }
