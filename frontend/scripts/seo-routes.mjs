@@ -3,6 +3,30 @@ export const BRAND_NAME = "Isis Mariana Tattoo";
 
 export const SECTION_ROUTES = [
   {
+    slug: "quem-sou-eu",
+    title: "Quem sou eu e minha trajetória | Isis Mariana Tattoo",
+    description:
+      "Conheça minha trajetória como tatuadora, minhas conquistas, experiências, viagens e mais de 10 anos dedicados à tatuagem autoral.",
+    sectionId: null,
+    priority: "0.8",
+  },
+  {
+    slug: "atelier",
+    title: "Meu atelier de tatuagem em Fortaleza | Isis Mariana",
+    description:
+      "Conheça meu espaço de criação e atendimento em Fortaleza, preparado para receber projetos de tatuagem autorais e personalizados.",
+    sectionId: "atelier",
+    priority: "0.8",
+  },
+  {
+    slug: "videos",
+    title: "Vídeos e processo criativo | Isis Mariana Tattoo",
+    description:
+      "Assista a vídeos sobre meu trabalho, meu processo criativo e minha trajetória como tatuadora em Fortaleza.",
+    sectionId: "videos",
+    priority: "0.6",
+  },
+  {
     slug: "sobre",
     title: "Sobre meu trabalho | Isis Mariana Tattoo",
     description:

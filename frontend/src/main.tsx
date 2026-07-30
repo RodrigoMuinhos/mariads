@@ -12,6 +12,8 @@ declare global {
 const normalizedPath = window.location.pathname.replace(/\/+$/, "") || "/";
 const sectionRoutes: Record<string, string> = {
   "/sobre": "sobre",
+  "/atelier": "atelier",
+  "/videos": "videos",
   "/portfolio": "estilos",
   "/estilos": "estilos",
   "/flash-desenhos": "flash",
@@ -58,6 +60,8 @@ async function renderPage() {
   const { default: Page } =
     normalizedPath === "/tatuadora-fortaleza"
       ? await import("./app/LocalSeoPage.tsx")
+      : normalizedPath === "/quem-sou-eu"
+        ? await import("./app/AboutMePage.tsx")
       : normalizedPath === "/politica-de-privacidade"
         ? await import("./app/PrivacyPolicyPage.tsx")
       : await import("./app/App.tsx");

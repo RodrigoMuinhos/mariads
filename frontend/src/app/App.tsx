@@ -28,6 +28,7 @@ import {
   Shield,
   ChevronRight,
   Cookie,
+  Youtube,
 } from "lucide-react";
 
 // ─── Translations ─────────────────────────────────────────────────────────────
@@ -37,6 +38,8 @@ type Lang = "pt" | "en";
 const T = {
   pt: {
     nav_cta: "Solicitar orçamento",
+    nav_bio: "Quem sou eu",
+    nav_atelier: "Meu Atelier",
     nav_about: "Sobre",
     nav_styles: "Estilos",
     nav_scale: "Grande Escala",
@@ -153,6 +156,8 @@ const T = {
   },
   en: {
     nav_cta: "Request a quote",
+    nav_bio: "About me",
+    nav_atelier: "My Studio",
     nav_about: "About",
     nav_styles: "Styles",
     nav_scale: "Large Scale",
@@ -2222,7 +2227,6 @@ export default function App() {
   const editMode = false;
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [focusedId, setFocusedId] = useState<string | null>(null);
-  const [scrolled, setScrolled] = useState(false);
   const [pastHero, setPastHero] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [instagramImages, setInstagramImages] = useState<string[]>(
@@ -2307,11 +2311,10 @@ export default function App() {
     localStorage.setItem("site_lang", lang);
   }, [lang]);
 
-  // Scroll — two thresholds: nav background + past-hero for floating bar
+  // Scroll threshold for the floating WhatsApp bar.
   useEffect(() => {
     const fn = () => {
       const y = window.scrollY;
-      setScrolled(y > 30);
       setPastHero(y > window.innerHeight * 0.7);
     };
     window.addEventListener("scroll", fn, { passive: true });
@@ -2531,86 +2534,112 @@ export default function App() {
       <header>
         <nav
           aria-label="Navegação principal"
-          className={`fixed inset-x-0 z-50 transition-all duration-300 ${navTop} ${scrolled || menuOpen ? "bg-background/97 backdrop-blur-md border-b border-border" : "bg-transparent"}`}
+          className={`fixed inset-x-0 z-50 border-t-2 border-t-primary border-b border-b-primary/30 bg-[#070707] shadow-[0_12px_36px_rgba(0,0,0,0.65)] ${navTop}`}
         >
-        <div className="flex items-center justify-between h-14 px-5 lg:px-12 max-w-7xl mx-auto">
-          <span
-            className="text-sm tracking-[0.2em] uppercase"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            {content.hero.title} {content.hero.titleItalic}
-          </span>
-          <div className="hidden lg:flex items-center gap-3">
-            {/* Lang toggle */}
-            <button
-              onClick={() => setLang((l) => (l === "pt" ? "en" : "pt"))}
-              className="flex items-center gap-1.5 text-[10px] tracking-[0.15em] uppercase text-muted-foreground hover:text-foreground transition-colors px-2 py-1"
-              title={t.lang_label}
-            >
-              <Globe size={11} />
-              {lang === "pt" ? "EN" : "PT"}
-            </button>
+          <div className="flex items-center h-16 px-5 lg:px-10 max-w-7xl mx-auto">
             <a
-              href={WA_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-[10px] tracking-[0.2em] uppercase text-primary border border-primary/30 px-4 py-2 hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+              href="/"
+              aria-label="Ir para o início"
+              className="text-sm tracking-[0.22em] uppercase flex-shrink-0 text-[#f3eee7] hover:text-primary transition-colors"
+              style={{ fontFamily: "var(--font-display)" }}
             >
-              <MessageCircle size={11} /> {t.nav_cta}
+              {content.hero.title} {content.hero.titleItalic}
             </a>
-          </div>
-          {/* Lang toggle — sempre visível no mobile */}
-          <div className="lg:hidden flex items-center gap-2">
-            <button
-              onClick={() => setLang((l) => (l === "pt" ? "en" : "pt"))}
-              className="flex items-center gap-1 text-[10px] tracking-[0.2em] uppercase text-muted-foreground border border-border/50 px-2.5 py-1.5 hover:border-primary hover:text-primary transition-all"
-              aria-label={t.lang_label}
-            >
-              <Globe size={10} />
-              {lang === "pt" ? "EN" : "PT"}
-            </button>
-            <button
-              onClick={() => setMenuOpen((v) => !v)}
-              className="flex items-center justify-center w-10 h-10"
-              aria-label={t.menu_aria}
-            >
-              {menuOpen ? <X size={20} /> : <Menu size={20} />}
-            </button>
-          </div>
-        </div>
 
-        {menuOpen && (
-          <div className="lg:hidden border-t border-border bg-background/97 px-5 py-5 flex flex-col gap-1">
-            {[
-              [t.nav_about, "/sobre"],
-              [t.nav_styles, "/estilos"],
-              [t.flash_label, "/flash-desenhos"],
-              [t.nav_scale, "/projetos-grande-escala"],
-              [t.nav_process, "/como-funciona"],
-              [t.nav_testimonials, "/depoimentos"],
-            ].map(([l, h]) => (
-              <a
-                key={h}
-                href={h}
-                onClick={() => setMenuOpen(false)}
-                className="text-sm tracking-[0.12em] uppercase text-muted-foreground py-3 border-b border-border/40 hover:text-foreground transition-colors"
+            <div
+              className="hidden xl:flex items-center justify-center gap-5 ml-auto mr-7"
+              aria-label="Seções do site"
+            >
+              {[
+                [t.nav_bio, "/quem-sou-eu"],
+                [t.nav_atelier, "/atelier"],
+                [t.nav_about, "/sobre"],
+                [t.nav_styles, "/portfolio"],
+                [t.flash_label, "/flash-desenhos"],
+                [t.nav_process, "/como-funciona"],
+              ].map(([label, href]) => (
+                <a
+                  key={href}
+                  href={href}
+                  className="relative whitespace-nowrap text-[9px] xl:text-[10px] tracking-[0.14em] uppercase text-[#cfc5b6] hover:text-white transition-colors after:absolute after:left-0 after:right-full after:-bottom-1 after:h-px after:bg-primary hover:after:right-0 after:transition-all"
+                >
+                  {label}
+                </a>
+              ))}
+            </div>
+
+            <div className="hidden xl:flex items-center gap-3 flex-shrink-0">
+              <button
+                onClick={() => setLang((l) => (l === "pt" ? "en" : "pt"))}
+                className="flex items-center gap-1.5 text-[10px] tracking-[0.15em] uppercase text-muted-foreground hover:text-foreground transition-colors px-2 py-1"
+                title={t.lang_label}
               >
-                {l}
-              </a>
-            ))}
-            <div className="pt-4">
+                <Globe size={11} />
+                {lang === "pt" ? "EN" : "PT"}
+              </button>
               <a
                 href={WA_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-3 bg-primary text-primary-foreground text-xs tracking-[0.18em] uppercase w-full h-12"
+                className="flex items-center gap-2 text-[10px] tracking-[0.2em] uppercase bg-primary text-primary-foreground border border-primary px-4 py-2.5 hover:bg-[#ead8b0] transition-all duration-300"
               >
-                <MessageCircle size={14} /> {t.nav_cta}{" "}
-                <ArrowUpRight size={12} />
+                <MessageCircle size={11} /> {t.nav_cta}
               </a>
             </div>
+
+            <div className="xl:hidden flex items-center gap-2 ml-auto">
+              <button
+                onClick={() => setLang((l) => (l === "pt" ? "en" : "pt"))}
+                className="flex items-center gap-1 text-[10px] tracking-[0.2em] uppercase text-muted-foreground border border-border/50 px-2.5 py-1.5 hover:border-primary hover:text-primary transition-all"
+                aria-label={t.lang_label}
+              >
+                <Globe size={10} />
+                {lang === "pt" ? "EN" : "PT"}
+              </button>
+              <button
+                onClick={() => setMenuOpen((v) => !v)}
+                className="flex items-center justify-center w-10 h-10"
+                aria-label={t.menu_aria}
+              >
+                {menuOpen ? <X size={20} /> : <Menu size={20} />}
+              </button>
+            </div>
           </div>
-        )}
+
+          {menuOpen && (
+            <div className="xl:hidden max-h-[calc(100svh-4rem)] overflow-y-auto border-t border-primary/25 bg-[#070707] px-5 py-4 flex flex-col gap-1 shadow-2xl">
+              {[
+                [t.nav_bio, "/quem-sou-eu"],
+                [t.nav_atelier, "/atelier"],
+                [t.nav_about, "/sobre"],
+                [t.nav_styles, "/portfolio"],
+                [t.flash_label, "/flash-desenhos"],
+                [t.nav_scale, "/projetos-grande-escala"],
+                [t.nav_process, "/como-funciona"],
+                [t.nav_testimonials, "/depoimentos"],
+              ].map(([l, h]) => (
+                <a
+                  key={h}
+                  href={h}
+                  onClick={() => setMenuOpen(false)}
+                  className="text-sm tracking-[0.12em] uppercase text-muted-foreground py-3 border-b border-border/40 hover:text-foreground transition-colors"
+                >
+                  {l}
+                </a>
+              ))}
+              <div className="pt-4">
+                <a
+                  href={WA_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-3 bg-primary text-primary-foreground text-xs tracking-[0.18em] uppercase w-full h-12"
+                >
+                  <MessageCircle size={14} /> {t.nav_cta}{" "}
+                  <ArrowUpRight size={12} />
+                </a>
+              </div>
+            </div>
+          )}
         </nav>
       </header>
 
@@ -3800,6 +3829,150 @@ export default function App() {
         </div>
       </section>
 
+      {/* ── MEU ATELIER ────────────────────────────────────────────────── */}
+      <section
+        id="atelier"
+        className="relative scroll-mt-16 overflow-hidden border-t border-border bg-card"
+      >
+        <div className="mx-auto grid max-w-[1500px] lg:min-h-[760px] lg:grid-cols-12">
+          <div className="relative min-h-[430px] overflow-hidden sm:min-h-[560px] lg:col-span-7 lg:min-h-full">
+            <img
+              src="/meu%20atelier.jpeg"
+              alt="Isis Mariana em seu atelier em Fortaleza"
+              loading="lazy"
+              className="absolute inset-0 h-full w-full scale-[1.02] object-cover object-[center_40%] transition-transform duration-1000 hover:scale-100"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/10 lg:bg-gradient-to-r lg:from-transparent lg:via-transparent lg:to-card" />
+            <span
+              className="absolute -bottom-7 left-3 text-[7.5rem] leading-none text-white/10 sm:text-[11rem] lg:-bottom-10 lg:text-[15rem]"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              ATELIER
+            </span>
+            <div className="absolute bottom-6 left-5 flex items-center gap-3 text-[9px] uppercase tracking-[0.25em] text-white/75 lg:left-8">
+              <span className="h-px w-10 bg-primary" />
+              Fortaleza · Ceará
+            </div>
+          </div>
+
+          <div className="relative flex flex-col justify-center px-5 py-20 sm:px-10 lg:col-span-5 lg:px-14 xl:px-20">
+            <span className="absolute right-5 top-6 text-xs text-primary/60 lg:right-10 lg:top-10">
+              / 01
+            </span>
+            <p className="mb-6 text-[10px] uppercase tracking-[0.34em] text-primary">
+              Meu espaço
+            </p>
+            <h2
+              className="text-6xl leading-[0.86] tracking-[-0.03em] sm:text-7xl lg:text-8xl"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Meu <span className="italic">Atelier</span>
+            </h2>
+            <p className="mt-9 max-w-md text-sm leading-loose text-muted-foreground">
+              É aqui que referências, anatomia e intenção se transformam em um
+              projeto único. Meu atendimento em Fortaleza acontece com hora
+              marcada, para que cada ideia receba tempo, escuta e atenção.
+            </p>
+            <div className="mt-10 grid grid-cols-2 border-y border-border">
+              <div className="border-r border-border py-5 pr-4">
+                <span className="block text-[9px] uppercase tracking-[0.22em] text-primary">
+                  Atendimento
+                </span>
+                <span className="mt-2 block text-xs text-muted-foreground">
+                  Com hora marcada
+                </span>
+              </div>
+              <div className="py-5 pl-5">
+                <span className="block text-[9px] uppercase tracking-[0.22em] text-primary">
+                  Localização
+                </span>
+                <span className="mt-2 block text-xs text-muted-foreground">
+                  Fortaleza, CE
+                </span>
+              </div>
+            </div>
+            <a
+              href={WA_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group mt-10 inline-flex min-h-[52px] items-center justify-between bg-primary px-6 text-xs uppercase tracking-[0.18em] text-primary-foreground"
+            >
+              Agendar uma conversa
+              <ArrowUpRight
+                size={15}
+                className="transition-transform group-hover:-translate-y-1 group-hover:translate-x-1"
+              />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ── VÍDEO ──────────────────────────────────────────────────────── */}
+      <section
+        id="videos"
+        className="scroll-mt-16 overflow-hidden border-t border-border px-5 py-20 sm:px-8 lg:px-20 lg:py-32"
+      >
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-12 grid gap-8 lg:grid-cols-12 lg:items-end">
+            <div className="lg:col-span-8">
+              <p className="mb-5 text-[10px] uppercase tracking-[0.34em] text-primary">
+                Processo em movimento
+              </p>
+              <h2
+                className="text-6xl leading-[0.86] tracking-[-0.035em] sm:text-7xl lg:text-8xl"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Mais que uma imagem.
+                <br />
+                <span className="italic">Aperte o play.</span>
+              </h2>
+            </div>
+            <p className="max-w-md border-l border-primary/50 pl-5 text-sm leading-loose text-muted-foreground lg:col-span-4">
+              Um registro em vídeo para você acompanhar meu universo, meu
+              processo e a história que existe por trás do traço.
+            </p>
+          </div>
+
+          <div className="grid gap-7 lg:grid-cols-12 lg:gap-10">
+            <div className="relative overflow-hidden border border-primary/25 bg-black shadow-[0_30px_80px_rgba(0,0,0,0.45)] lg:col-span-9">
+              <div className="aspect-video">
+                <iframe
+                  src="https://www.youtube-nocookie.com/embed/ydIU3Idfq20?rel=0"
+                  title="Arte, processo e trajetória de Isis Mariana"
+                  className="h-full w-full"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                />
+              </div>
+              <span className="pointer-events-none absolute left-3 top-3 border border-white/20 bg-black/75 px-3 py-2 text-[8px] uppercase tracking-[0.22em] text-white/75 backdrop-blur-md sm:left-5 sm:top-5 sm:text-[9px]">
+                Isis Mariana · Em vídeo
+              </span>
+            </div>
+            <div className="flex flex-col justify-end border-t border-primary/50 pt-6 lg:col-span-3">
+              <span className="text-[10px] uppercase tracking-[0.3em] text-primary">
+                Assista aqui
+              </span>
+              <h3
+                className="mt-4 text-3xl leading-tight lg:text-4xl"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Arte, processo e trajetória
+              </h3>
+              <a
+                href="https://www.youtube.com/watch?v=ydIU3Idfq20"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-8 inline-flex w-fit items-center gap-3 border-b border-primary/50 pb-2 text-[10px] uppercase tracking-[0.18em] transition-colors hover:text-primary"
+              >
+                Abrir no YouTube <ArrowUpRight size={13} />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── INSTAGRAM CAROUSEL ──────────────────────────────────────────── */}
       <section
         id="instagram"
@@ -3961,6 +4134,19 @@ export default function App() {
                   className="ml-auto opacity-40 group-hover:opacity-80 transition-opacity"
                 />
               </a>
+              <a
+                href="https://www.youtube.com/@IsisMarianaTattoo"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 border border-border text-foreground px-4 py-3 text-xs tracking-[0.15em] uppercase hover:border-primary hover:text-primary transition-all min-h-[48px] group"
+              >
+                <Youtube size={15} />
+                <span>YouTube</span>
+                <ArrowUpRight
+                  size={11}
+                  className="ml-auto opacity-40 group-hover:opacity-80 transition-opacity"
+                />
+              </a>
             </div>
           </div>
 
@@ -3977,6 +4163,8 @@ export default function App() {
                     : "Tattoo artist in Fortaleza",
                   "/tatuadora-fortaleza",
                 ],
+                [t.nav_bio, "/quem-sou-eu"],
+                [t.nav_atelier, "/atelier"],
                 [t.nav_about, "/sobre"],
                 [t.nav_styles, "/estilos"],
                 [t.flash_label, "/flash-desenhos"],
@@ -4053,17 +4241,29 @@ export default function App() {
       </footer>
 
       {/* ── FLOATING WA — desktop ─────────────────────────────────────── */}
-      <div className="fixed bottom-6 right-5 z-40 hidden lg:block">
+      <div className="fixed bottom-7 right-6 z-40 hidden lg:block">
+        <span
+          aria-hidden="true"
+          className="absolute inset-0 animate-pulse bg-primary/35 blur-xl"
+        />
         <a
           href={WA_LINK}
           target="_blank"
           rel="noopener noreferrer"
-          className="group flex items-center gap-2.5 bg-background border border-primary/30 text-primary px-5 py-3 text-[10px] tracking-[0.2em] uppercase hover:bg-primary hover:text-primary-foreground transition-all duration-300 shadow-2xl"
+          className="group relative flex min-h-[56px] items-center gap-3 border border-[#ead8b0] bg-primary px-6 text-[10px] uppercase tracking-[0.2em] text-primary-foreground shadow-[0_12px_35px_rgba(197,174,126,0.35)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#ead8b0] hover:shadow-[0_18px_45px_rgba(197,174,126,0.5)]"
         >
-          <MessageCircle size={14} /> <span>WhatsApp</span>
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-black/15 transition-transform duration-300 group-hover:scale-110">
+            <MessageCircle size={15} />
+          </span>
+          <span className="flex flex-col gap-0.5">
+            <span className="text-[8px] tracking-[0.16em] opacity-70">
+              Fale comigo
+            </span>
+            <span>WhatsApp</span>
+          </span>
           <ArrowUpRight
-            size={11}
-            className="opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+            size={12}
+            className="ml-1 opacity-70 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:opacity-100"
           />
         </a>
       </div>
